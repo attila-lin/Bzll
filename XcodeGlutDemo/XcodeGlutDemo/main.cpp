@@ -38,6 +38,7 @@ int main(void)
     glfwSetKeyCallback(window, key_callback);
     while (!glfwWindowShouldClose(window))
     {
+        /* Render here */
         float ratio;
         int width, height;
         glfwGetFramebufferSize(window, &width, &height);
@@ -58,7 +59,9 @@ int main(void)
         glColor3f(0.f, 0.f, 1.f);
         glVertex3f(0.f, 0.6f, 0.f);
         glEnd();
+        /* Swap front and back buffers */
         glfwSwapBuffers(window);
+        /* Poll for and process events */
         glfwPollEvents();
     }
     glfwDestroyWindow(window);
