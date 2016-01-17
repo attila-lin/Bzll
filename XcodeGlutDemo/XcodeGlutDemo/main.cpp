@@ -10,6 +10,7 @@
 #include <iostream>
 
 #include <GLFW/glfw3.h>
+#include <gperftools/tcmalloc.h>
 #include <stdlib.h>
 #include <stdio.h>
 static void error_callback(int error, const char* description)
@@ -50,7 +51,7 @@ GLuint LoadShader ( GLenum type, const char *shaderSrc )
         glGetShaderiv ( shader, GL_INFO_LOG_LENGTH, &infoLen );
         if ( infoLen > 1 )
         {
-            char* infoLog = (char *)malloc (sizeof(char) * infoLen );
+            char* infoLog = (char *)valloc (sizeof(char) * infoLen );
             glGetShaderInfoLog( shader, infoLen, NULL, infoLog );
             printf ( "Error compiling shader:\n%s\n", infoLog );
             free ( infoLog );

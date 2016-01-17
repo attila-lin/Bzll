@@ -2,13 +2,14 @@
 ---
 
 ##1. install glfw3
+### 1.
 ```
 brew update
 brew tap homebrew/versions
 brew install glfw3
 ```
 
-##2. xcode
+### 2. xcode
 + 1. Create a new Xcode project
 + 2. OS X -> Application -> Command Line Tool
 + 3. 设置名字之类的
@@ -19,3 +20,9 @@ brew info glfw3 # get the install position
 ```
 + 6. In "Build Settings" -> "Search Paths" -> "Header Search Paths", add glfw3 headers.
 + 7. build success
+
+
+##2. gperftools/tcmalloc
+```
+brew install gperftools
+```

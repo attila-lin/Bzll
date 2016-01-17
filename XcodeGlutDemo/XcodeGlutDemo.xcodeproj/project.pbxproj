@@ -10,6 +10,7 @@
 		9CBCA4341C4AA59A00488DB7 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBCA4331C4AA59A00488DB7 /* main.cpp */; };
 		9CBCA43D1C4AA6D100488DB7 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CBCA43C1C4AA6D100488DB7 /* OpenGL.framework */; };
 		9CBCA43F1C4AAC6600488DB7 /* libglfw3.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CBCA43E1C4AAC6600488DB7 /* libglfw3.3.1.dylib */; };
+		9CBCA4411C4B320800488DB7 /* libtcmalloc_and_profiler.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CBCA4401C4B320800488DB7 /* libtcmalloc_and_profiler.4.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,6 +30,7 @@
 		9CBCA4331C4AA59A00488DB7 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		9CBCA43C1C4AA6D100488DB7 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		9CBCA43E1C4AAC6600488DB7 /* libglfw3.3.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw3.3.1.dylib; path = ../../../../../usr/local/Cellar/glfw3/3.1.2/lib/libglfw3.3.1.dylib; sourceTree = "<group>"; };
+		9CBCA4401C4B320800488DB7 /* libtcmalloc_and_profiler.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtcmalloc_and_profiler.4.dylib; path = ../../../../../usr/local/Cellar/gperftools/2.4/lib/libtcmalloc_and_profiler.4.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CBCA4411C4B320800488DB7 /* libtcmalloc_and_profiler.4.dylib in Frameworks */,
 				9CBCA43F1C4AAC6600488DB7 /* libglfw3.3.1.dylib in Frameworks */,
 				9CBCA43D1C4AA6D100488DB7 /* OpenGL.framework in Frameworks */,
 			);
@@ -47,6 +50,7 @@
 		9CBCA4271C4AA59A00488DB7 = {
 			isa = PBXGroup;
 			children = (
+				9CBCA4401C4B320800488DB7 /* libtcmalloc_and_profiler.4.dylib */,
 				9CBCA43E1C4AAC6600488DB7 /* libglfw3.3.1.dylib */,
 				9CBCA43C1C4AA6D100488DB7 /* OpenGL.framework */,
 				9CBCA4321C4AA59A00488DB7 /* XcodeGlutDemo */,
@@ -215,8 +219,14 @@
 		9CBCA4381C4AA59A00488DB7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				HEADER_SEARCH_PATHS = /usr/local/Cellar/glfw3/3.1.2/include;
-				LIBRARY_SEARCH_PATHS = /usr/local/Cellar/glfw3/3.1.2/lib;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/Cellar/glfw3/3.1.2/include,
+					/usr/local/Cellar/gperftools/2.4/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/Cellar/glfw3/3.1.2/lib,
+					/usr/local/Cellar/gperftools/2.4/lib,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -224,8 +234,14 @@
 		9CBCA4391C4AA59A00488DB7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				HEADER_SEARCH_PATHS = /usr/local/Cellar/glfw3/3.1.2/include;
-				LIBRARY_SEARCH_PATHS = /usr/local/Cellar/glfw3/3.1.2/lib;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/Cellar/glfw3/3.1.2/include,
+					/usr/local/Cellar/gperftools/2.4/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/Cellar/glfw3/3.1.2/lib,
+					/usr/local/Cellar/gperftools/2.4/lib,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -249,6 +265,7 @@
 				9CBCA4391C4AA59A00488DB7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
