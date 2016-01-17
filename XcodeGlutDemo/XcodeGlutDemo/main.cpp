@@ -5,7 +5,7 @@
 //  Created by whatever on 17/01/2016.
 //  Copyright © 2016 whatever. All rights reserved.
 //
-
+#include "FileSystem.h"
 
 #include <iostream>
 
@@ -13,6 +13,8 @@
 #include <gperftools/tcmalloc.h>
 #include <stdlib.h>
 #include <stdio.h>
+
+
 static void error_callback(int error, const char* description)
 {
     fputs(description, stderr);
@@ -33,7 +35,7 @@ GLuint LoadShader ( GLenum type, const char *shaderSrc )
 {
     GLuint shader;
     GLint compiled;
-    
+
     // Create the shader object
     shader = glCreateShader ( type );
     if ( shader == 0 )
@@ -68,7 +70,7 @@ int main(void)
     glfwSetErrorCallback(error_callback);
     if (!glfwInit())
         exit(EXIT_FAILURE);
-    
+
     window = glfwCreateWindow(1280, 720, "Simple example", NULL, NULL);
     if (!window)
     {
@@ -78,19 +80,27 @@ int main(void)
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
     glfwSetKeyCallback(window, key_callback);
-    
+
     // 添加鼠标
     // GLFWcursor* cursor = glfwCreateCursor(")
+    // 版本信息
     std::cout << glfwGetVersionString() << std::endl;
-    
-    // FPS
+
+    // test FileSystem
+    std::string path = "/Users/whatever/projects/bzll/README.md";
+    std::cout << path << std::endl;
+    bool isExist = bzll::FileSystem::fileExists(path);
+    std::cout << std::boolalpha <<isExist << std::endl;
+
+    // FPS等调试信息
     // http://www.opengl-tutorial.org/miscellaneous/an-fps-counter/
     double lastTime = glfwGetTime();
     int nbFrames = 0;
-    
+
+
     while (!glfwWindowShouldClose(window))
     {
-        
+
         double currentTime = glfwGetTime();
         nbFrames++;
         if ( currentTime - lastTime >= 1.0 ){
@@ -98,7 +108,7 @@ int main(void)
             nbFrames = 0;
             lastTime += 1.0;
         }
-        
+
         /* Render here */
         float ratio;
         int width, height;
