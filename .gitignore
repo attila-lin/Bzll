@@ -26,3 +26,5 @@
 *.exe
 *.out
 *.app
+
+XcodeGlutDemo/Res/Img/
