@@ -27,7 +27,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		9CBCA4301C4AA59A00488DB7 /* XcodeGlutDemo */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = XcodeGlutDemo; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CBCA4301C4AA59A00488DB7 /* Bzll */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Bzll; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CBCA4331C4AA59A00488DB7 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		9CBCA43C1C4AA6D100488DB7 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		9CBCA43E1C4AAC6600488DB7 /* libglfw3.3.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw3.3.1.dylib; path = ../../../../../usr/local/Cellar/glfw3/3.1.2/lib/libglfw3.3.1.dylib; sourceTree = "<group>"; };
@@ -57,7 +57,7 @@
 				9CBCA4401C4B320800488DB7 /* libtcmalloc_and_profiler.4.dylib */,
 				9CBCA43E1C4AAC6600488DB7 /* libglfw3.3.1.dylib */,
 				9CBCA43C1C4AA6D100488DB7 /* OpenGL.framework */,
-				9CBCA4321C4AA59A00488DB7 /* XcodeGlutDemo */,
+				9CBCA4321C4AA59A00488DB7 /* src */,
 				9CBCA4311C4AA59A00488DB7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -65,12 +65,12 @@
 		9CBCA4311C4AA59A00488DB7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9CBCA4301C4AA59A00488DB7 /* XcodeGlutDemo */,
+				9CBCA4301C4AA59A00488DB7 /* Bzll */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9CBCA4321C4AA59A00488DB7 /* XcodeGlutDemo */ = {
+		9CBCA4321C4AA59A00488DB7 /* src */ = {
 			isa = PBXGroup;
 			children = (
 				9CBCA4481C4B3D4000488DB7 /* Stream.h */,
@@ -78,15 +78,16 @@
 				9CBCA4461C4B393F00488DB7 /* FileSystem.h */,
 				9CBCA4331C4AA59A00488DB7 /* main.cpp */,
 			);
+			name = src;
 			path = XcodeGlutDemo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9CBCA42F1C4AA59A00488DB7 /* XcodeGlutDemo */ = {
+		9CBCA42F1C4AA59A00488DB7 /* Bzll */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9CBCA4371C4AA59A00488DB7 /* Build configuration list for PBXNativeTarget "XcodeGlutDemo" */;
+			buildConfigurationList = 9CBCA4371C4AA59A00488DB7 /* Build configuration list for PBXNativeTarget "Bzll" */;
 			buildPhases = (
 				9CBCA42C1C4AA59A00488DB7 /* Sources */,
 				9CBCA42D1C4AA59A00488DB7 /* Frameworks */,
@@ -96,9 +97,9 @@
 			);
 			dependencies = (
 			);
-			name = XcodeGlutDemo;
+			name = Bzll;
 			productName = XcodeGlutDemo;
-			productReference = 9CBCA4301C4AA59A00488DB7 /* XcodeGlutDemo */;
+			productReference = 9CBCA4301C4AA59A00488DB7 /* Bzll */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -115,7 +116,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 9CBCA42B1C4AA59A00488DB7 /* Build configuration list for PBXProject "XcodeGlutDemo" */;
+			buildConfigurationList = 9CBCA42B1C4AA59A00488DB7 /* Build configuration list for PBXProject "Bzll" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -127,7 +128,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9CBCA42F1C4AA59A00488DB7 /* XcodeGlutDemo */,
+				9CBCA42F1C4AA59A00488DB7 /* Bzll */,
 			);
 		};
 /* End PBXProject section */
@@ -235,7 +236,7 @@
 					/usr/local/Cellar/glfw3/3.1.2/lib,
 					/usr/local/Cellar/gperftools/2.4/lib,
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Bzll;
 			};
 			name = Debug;
 		};
@@ -250,14 +251,14 @@
 					/usr/local/Cellar/glfw3/3.1.2/lib,
 					/usr/local/Cellar/gperftools/2.4/lib,
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Bzll;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9CBCA42B1C4AA59A00488DB7 /* Build configuration list for PBXProject "XcodeGlutDemo" */ = {
+		9CBCA42B1C4AA59A00488DB7 /* Build configuration list for PBXProject "Bzll" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9CBCA4351C4AA59A00488DB7 /* Debug */,
@@ -266,7 +267,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9CBCA4371C4AA59A00488DB7 /* Build configuration list for PBXNativeTarget "XcodeGlutDemo" */ = {
+		9CBCA4371C4AA59A00488DB7 /* Build configuration list for PBXNativeTarget "Bzll" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9CBCA4381C4AA59A00488DB7 /* Debug */,

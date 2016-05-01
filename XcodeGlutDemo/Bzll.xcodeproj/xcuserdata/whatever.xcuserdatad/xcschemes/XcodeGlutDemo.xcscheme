@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "9CBCA42F1C4AA59A00488DB7"
-               BuildableName = "XcodeGlutDemo"
-               BlueprintName = "XcodeGlutDemo"
-               ReferencedContainer = "container:XcodeGlutDemo.xcodeproj">
+               BuildableName = "BZLI"
+               BlueprintName = "Bzll"
+               ReferencedContainer = "container:Bzll.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9CBCA42F1C4AA59A00488DB7"
-            BuildableName = "XcodeGlutDemo"
-            BlueprintName = "XcodeGlutDemo"
-            ReferencedContainer = "container:XcodeGlutDemo.xcodeproj">
+            BuildableName = "BZLI"
+            BlueprintName = "Bzll"
+            ReferencedContainer = "container:Bzll.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -56,9 +56,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9CBCA42F1C4AA59A00488DB7"
-            BuildableName = "XcodeGlutDemo"
-            BlueprintName = "XcodeGlutDemo"
-            ReferencedContainer = "container:XcodeGlutDemo.xcodeproj">
+            BuildableName = "BZLI"
+            BlueprintName = "Bzll"
+            ReferencedContainer = "container:Bzll.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -75,9 +75,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9CBCA42F1C4AA59A00488DB7"
-            BuildableName = "XcodeGlutDemo"
-            BlueprintName = "XcodeGlutDemo"
-            ReferencedContainer = "container:XcodeGlutDemo.xcodeproj">
+            BuildableName = "BZLI"
+            BlueprintName = "Bzll"
+            ReferencedContainer = "container:Bzll.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
