@@ -1,0 +1,8 @@
+[package]
+name = "BZLL"
+version = "0.1.0"
+authors = ["linyiyu1992@gmail.com"]
+
+[dependencies]
+glium = "*"
+image = "*"
