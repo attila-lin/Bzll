@@ -13,7 +13,7 @@ use std::error::Error;
 // 	UnknownError
 // }
 
-pub fn open(p: &str) -> ::std::string::String {
+fn open(p: &str) -> ::std::string::String {
 	let path = Path::new(p);
 	let display = path.display();
 
