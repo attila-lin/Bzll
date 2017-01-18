@@ -24,3 +24,7 @@ End with a Useable Client Engine
 ##Milstone 4th:
 2019		-	2020		Add Big World Server
 
+
+##Want TODO
+Scripting Language: For logical and UI
+Vulkan Support: For VR
