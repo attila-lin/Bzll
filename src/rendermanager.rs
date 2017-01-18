@@ -8,23 +8,34 @@ pub struct RenderManager {
     pub inner: Arc<Mutex<u8>>
 }
 
-pub fn singleton() -> RenderManager {
-    // Initialize it to a null value
-    static mut SINGLETON: *const RenderManager = 0 as *const RenderManager;
-    static ONCE: Once = ONCE_INIT;
+impl RenderManager {
+	pub fn startUp() {
 
-    unsafe {
-        ONCE.call_once(|| {
-            // Make it
-            let singleton = RenderManager {
-                inner: Arc::new(Mutex::new(0))
-            };
+	}
 
-            // Put it in the heap so it can outlive this call
-            SINGLETON = mem::transmute(Box::new(singleton));
-        });
+	pub fn shoutDown() {
 
-        // Now we give out a copy of the data that is safe to use concurrently.
-        (*SINGLETON).clone()
-    }
+	}
+
+	pub fn instance() -> RenderManager {
+	    // Initialize it to a null value
+	    static mut SINGLETON: *const RenderManager = 0 as *const RenderManager;
+	    static ONCE: Once = ONCE_INIT;
+
+	    unsafe {
+	        ONCE.call_once(|| {
+	            // Make it
+	            let instance = RenderManager {
+	                inner: Arc::new(Mutex::new(0))
+	            };
+
+	            // Put it in the heap so it can outlive this call
+	            SINGLETON = mem::transmute(Box::new(instance));
+	        });
+
+	        // Now we give out a copy of the data that is safe to use concurrently.
+	        (*SINGLETON).clone()
+	    }
+	}
+
 }

@@ -1,6 +1,6 @@
 mod rendermanager;
 
-use rendermanager::{RenderManager, singleton};
+use rendermanager::RenderManager;
 
 use std::time::Duration;
 use std::{mem, thread};
@@ -11,7 +11,7 @@ fn main() {
     let threads: Vec<_> = (0..10).map(|i| {
         thread::spawn(move || {
             thread::sleep(Duration::from_millis(i * 10));
-            let s = singleton();
+            let s = RenderManager::instance();
             let mut data = s.inner.lock().unwrap();
             *data = i as u8;
         })
@@ -21,7 +21,7 @@ fn main() {
     for _ in 0u8..20 {
         thread::sleep(Duration::from_millis(5));
 
-        let s = singleton();
+        let s = RenderManager::instance();
         let data = s.inner.lock().unwrap();
         println!("It is: {}", *data);
     }
