@@ -7,3 +7,4 @@ authors = ["linyiyu1992@gmail.com"]
 glium = "*"
 image = "*"
 num = "*"
+rand = "*"
