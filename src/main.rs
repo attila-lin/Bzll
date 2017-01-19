@@ -1,3 +1,7 @@
+#[macro_use]
+extern crate glium;
+extern crate image;
+
 mod rendermanager;
 
 use rendermanager::RenderManager;
@@ -7,26 +11,19 @@ use std::{mem, thread};
 
 
 fn main() {
-    // Let's use the singleton in a few threads
-    let threads: Vec<_> = (0..10).map(|i| {
-        thread::spawn(move || {
-            thread::sleep(Duration::from_millis(i * 10));
-            let s = RenderManager::instance();
-            let mut data = s.inner.lock().unwrap();
-            *data = i as u8;
-        })
-    }).collect();
 
-    // And let's check the singleton every so often
-    for _ in 0u8..20 {
-        thread::sleep(Duration::from_millis(5));
+    // let ioThread = thread::spawn(move || {
+    //     let s = FileManager::instance();
+    //     let mut data = s.inner.lock().unwrap();
+    //     print!("hehe");
+    // });
+    
+    let renderThread = thread::spawn(move || {
+        let rendermanager = RenderManager::instance();
+        // let mut data = s.inner.lock().unwrap();
+        // print!("hehe");
+        rendermanager.startUp()
+    });
 
-        let s = RenderManager::instance();
-        let data = s.inner.lock().unwrap();
-        println!("It is: {}", *data);
-    }
-
-    for thread in threads.into_iter() {
-        thread.join().unwrap();
-    }
+    renderThread.join().unwrap();
 }
