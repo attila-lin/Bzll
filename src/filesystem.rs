@@ -3,17 +3,25 @@ use std::fs::File;
 use std::path::Path;
 use std::error::Error;
 
-// enum FileStatus
-// {
-// 	Ok,           			
-// 	IOError,          		
-// 	EOS,              		
-// 	IllegalCall,      		
-// 	Closed,           		
-// 	UnknownError
-// }
+enum FileStatus
+{
+	Ok,           			
+	IOError,          		
+	EOS,              		
+	IllegalCall,      		
+	Closed,           		
+	UnknownError
+}
 
-fn open(p: &str) -> ::std::string::String {
+enum AccessMode
+{
+    Read,  
+    Write,
+    ReadWrite, 
+    WriteAppend,
+}
+
+pub fn open(p: &str) -> ::std::string::String {
 	let path = Path::new(p);
 	let display = path.display();
 
@@ -34,8 +42,6 @@ fn open(p: &str) -> ::std::string::String {
         Ok(_) => s,
     }
 }
-
-
 
 #[cfg(test)]
 mod tests {
