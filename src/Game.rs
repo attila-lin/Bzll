@@ -1,5 +1,7 @@
 use std::sync::{Arc, Mutex, Once, ONCE_INIT};
-use std::{mem, thread};
+use std::mem;
+
+use rendermanager::RenderManager;
 
 #[derive(Clone)]
 pub struct Game {
@@ -44,7 +46,7 @@ impl Game {
 		}
 
 		let frameTime = Game::getGameTime();
-		let elapsedTime = (frameTime - self._lastFrameTime);
+		let elapsedTime = frameTime - self._lastFrameTime;
         self._lastFrameTime = frameTime;
 
         Game::update(elapsedTime);
@@ -68,7 +70,7 @@ impl Game {
 
 	fn update(elapsedTime:u64)
 	{
-
+		RenderManager::instance().render(elapsedTime)
 	}
 
 	fn render(elapsedTime:u64)

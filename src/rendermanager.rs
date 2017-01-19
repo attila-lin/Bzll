@@ -12,7 +12,8 @@ use std::{mem, thread};
 pub struct RenderManager {
 	// Since we will be used in many threads, we need to protect
 	// concurrent access
-	pub inner: Arc<Mutex<u8>>
+	pub inner: Arc<Mutex<u8>>,
+	pub _sleepTime: u64,
 }
 
 #[derive(Copy, Clone)]
@@ -77,7 +78,8 @@ impl RenderManager {
 			ONCE.call_once(|| {
 				// Make it
 				let instance = RenderManager {
-					inner: Arc::new(Mutex::new(0))
+					inner: Arc::new(Mutex::new(0)),
+					_sleepTime: 0u64,
 				};
 
 				// Put it in the heap so it can outlive this call
@@ -89,9 +91,9 @@ impl RenderManager {
 		}
 	}
 
-	fn render()
+	pub fn render(&mut self, elapsedTime:u64)
 	{
-
+		self._sleepTime = (1000.0 / 60.0) as u64 - elapsedTime;
 	}
 
 	fn pause()
@@ -136,11 +138,14 @@ impl RenderManager {
 												  None).unwrap();
 
 		let mut t:f32 = -0.5;
+
+		let view = view_matrix(&[0.5, 0.2, -3.0], &[-0.5, -0.2, 3.0], &[0.0, 1.0, 0.0]);
+
 		loop {
 			let mut target = display.draw();
 			target.clear_color_and_depth((0.0, 0.0, 1.0, 1.0), 1.0);
 
-			t += 0.1;
+			t += 0.001;
 			if t > 0.5 {
 				t = -0.5;
 			}
@@ -150,8 +155,6 @@ impl RenderManager {
 				[0.0, 0.0, 1.0, 0.0],
 				[t, 0.0, 0.0, 1.0f32]
 			];
-
-			let view = view_matrix(&[0.5, 0.2, -3.0], &[-0.5, -0.2, 3.0], &[0.0, 1.0, 0.0]);
 
 			let perspective = {
 				let (width, height) = target.get_dimensions();
@@ -190,9 +193,7 @@ impl RenderManager {
 
 			use std::time::Duration;
 			use std::thread;
-			thread::sleep(Duration::from_millis(100));
-			// sleep
-			// print!("hehe once");
+			thread::sleep(Duration::from_millis(self._sleepTime));
 
 			for ev in display.poll_events() {
 				match ev {

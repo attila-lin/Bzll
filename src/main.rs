@@ -8,15 +8,11 @@ mod mainwnd;
 mod rendermanager;
 mod filesystem;
 
-use game::Game;
-use mainwnd::MainWnd;
+// use game::Game;
+// use mainwnd::MainWnd;
 use rendermanager::RenderManager;
 
-use std::time::Duration;
-use std::{mem, thread};
-
-// static STATIC: Type = init;
-
+use std::thread;
 
 fn main() {
 
@@ -26,13 +22,11 @@ fn main() {
     //     print!("hehe");
     // });
 
-    let mainWnd = MainWnd::instance();
-    let game = Game::instance();
+    // let mainWnd = MainWnd::instance();
+    // let game = Game::instance();
     
     let renderThread = thread::spawn(move || {
         let renderManager = RenderManager::instance();
-        // let mut data = s.inner.lock().unwrap();
-        // print!("hehe");
         renderManager.startUp()
     });
 
