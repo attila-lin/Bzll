@@ -198,10 +198,22 @@ impl RenderManager {
 			for ev in display.poll_events() {
 				match ev {
 					glium::glutin::Event::Closed => return,
+					glium::glutin::Event::KeyboardInput(elementState, u8, keyCode) => KeyboardInput(elementState, keyCode),
 					_ => ()
 				}
 			}
 		}
 	}
 
+}
+
+use glium::glutin::{ElementState, VirtualKeyCode};
+pub fn KeyboardInput(elementState:ElementState, keyCode:Option<VirtualKeyCode>)
+{
+	if elementState == ElementState::Pressed{
+		print!("down{:?}", keyCode);
+	}
+	else {
+		print!("up{:?}", keyCode);
+	}
 }
