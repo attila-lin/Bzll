@@ -65,7 +65,7 @@ impl Game {
 	pub fn getGameTime() -> u64 {
 		use time;
 
-		return time::precise_time_ns() ;
+		return time::precise_time_ns();
 	}
 
 	fn update(elapsedTime:u64)

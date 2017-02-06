@@ -7,10 +7,12 @@ mod game;
 mod mainwnd;
 mod rendermanager;
 mod filesystem;
+mod resourcemanager;
 
 // use game::Game;
 // use mainwnd::MainWnd;
 use rendermanager::RenderManager;
+use resourcemanager::load_obj;
 
 use std::thread;
 
@@ -24,6 +26,8 @@ fn main() {
 
     // let mainWnd = MainWnd::instance();
     // let game = Game::instance();
+
+    resourcemanager::load_obj("./artist/Characters/Borderlands2-Zero/zero.obj");
     
     let renderThread = thread::spawn(move || {
         let renderManager = RenderManager::instance();

@@ -10,3 +10,12 @@ num = "*"
 rand = "*"
 lazy_static = "*"
 time = "*"
+flame = { version = "^0.1.9", optional = true }
+flamer = { version = "^0.1.2", optional = true }
+cgmath = "0.9.1"
+genmesh = "0.4"
+obj = { version = "0.5", features = ["usegenmesh"] }
+
+[features]
+default = []
+flame_it = ["flame", "flamer"]

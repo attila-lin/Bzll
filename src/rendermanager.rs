@@ -3,6 +3,7 @@ use image;
 
 use mainwnd::MainWnd;
 use filesystem;
+use resourcemanager;
 
 use std::io::Cursor;
 use std::sync::{Arc, Mutex, Once, ONCE_INIT};
@@ -108,6 +109,8 @@ impl RenderManager {
 						.with_depth_buffer(24)
 						.build_glium().unwrap();
 
+		let vertex_buffer = resourcemanager::load_wavefront(&display, include_bytes!("../artist/Objects/teapot.obj"));
+
 		let shape = glium::vertex::VertexBuffer::new(&display, &[
 				Vertex { position: [-1.0,  1.0, 0.0], normal: [0.0, 0.0, -1.0], tex_coords: [0.0, 1.0] },
 				Vertex { position: [ 1.0,  1.0, 0.0], normal: [0.0, 0.0, -1.0], tex_coords: [1.0, 1.0] },
@@ -135,6 +138,14 @@ impl RenderManager {
 		let fragment_shader_src_slice: &str = &fragment_shader_src;
 
 		let program = glium::Program::from_source(&display, vertex_shader_src_slice, fragment_shader_src_slice,
+												  None).unwrap();
+
+		let t_vertex_shader_src = filesystem::open("./test/teapot_vertex_shader");
+		let t_vertex_shader_src_slice: &str = &t_vertex_shader_src;
+		let t_fragment_shader_src = filesystem::open("./test/teapot_fragment_shader");
+		let t_fragment_shader_src_slice: &str = &t_fragment_shader_src;
+
+		let t_program = glium::Program::from_source(&display, t_vertex_shader_src_slice, t_fragment_shader_src_slice,
 												  None).unwrap();
 
 		let mut t:f32 = -0.5;
@@ -185,10 +196,16 @@ impl RenderManager {
 				.. Default::default()
 			};
 
+			target.draw(&vertex_buffer,
+						&glium::index::NoIndices(glium::index::PrimitiveType::TrianglesList),
+						&t_program, &uniform! { model: model, view: view, perspective: perspective,
+									u_light: light, diffuse_tex: &diffuse_texture, normal_tex: &normal_map }, &params).unwrap();
+
 			target.draw(&shape, glium::index::NoIndices(glium::index::PrimitiveType::TriangleStrip), &program,
 						&uniform! { model: model, view: view, perspective: perspective,
 									u_light: light, diffuse_tex: &diffuse_texture, normal_tex: &normal_map },
 						&params).unwrap();
+			
 			target.finish().unwrap();
 
 			use std::time::Duration;
@@ -212,6 +229,7 @@ pub fn KeyboardInput(elementState:ElementState, keyCode:Option<VirtualKeyCode>)
 {
 	if elementState == ElementState::Pressed{
 		print!("down{:?}", keyCode);
+		// camera.process_input(&ev);
 	}
 	else {
 		print!("up{:?}", keyCode);
