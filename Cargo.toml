@@ -2,6 +2,12 @@
 name = "Bzll"
 version = "0.1.0"
 authors = ["linyiyu1992@gmail.com"]
+description = """
+Modern and elegent game engine.
+
+"""
+keywords = ["opengl", "cross-platform", "game engine"]
+license = "MIT"
 
 [dependencies]
 glium = "*"

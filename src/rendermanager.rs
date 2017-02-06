@@ -205,7 +205,7 @@ impl RenderManager {
 						&uniform! { model: model, view: view, perspective: perspective,
 									u_light: light, diffuse_tex: &diffuse_texture, normal_tex: &normal_map },
 						&params).unwrap();
-			
+
 			target.finish().unwrap();
 
 			use std::time::Duration;
