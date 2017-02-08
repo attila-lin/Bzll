@@ -83,12 +83,12 @@ impl Game {
 		return time::precise_time_ns();
 	}
 
-    pub fn update(elapsedTime:u64)
+    fn update(elapsedTime:u64)
 	{
 
 	}
 
-    pub fn render(elapsedTime:u64)
+    fn render(elapsedTime:u64)
 	{
         RenderManager::instance().startUp();
 	}

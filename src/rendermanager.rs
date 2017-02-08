@@ -4,10 +4,14 @@ use image;
 use mainwnd::MainWnd;
 use filesystem;
 use resourcemanager;
+use camera::CameraState;
 
 use std::io::Cursor;
 use std::sync::{Arc, Mutex, Once, ONCE_INIT};
 use std::{mem, thread};
+
+use glium::glutin;
+use glium::glutin::{ElementState, VirtualKeyCode};
 
 #[derive(Clone)]
 pub struct RenderManager {
@@ -15,6 +19,7 @@ pub struct RenderManager {
 	// concurrent access
 	pub inner: Arc<Mutex<u8>>,
 	pub _sleepTime: u64,
+    pub camera: CameraState,
 }
 
 #[derive(Copy, Clone)]
@@ -62,7 +67,7 @@ fn view_matrix(position: &[f32; 3], direction: &[f32; 3], up: &[f32; 3]) -> [[f3
 
 
 impl RenderManager {
-	pub fn startUp(&self) {
+	pub fn startUp(&mut self) {
 		self.mainLoop();
 	}
 
@@ -81,6 +86,7 @@ impl RenderManager {
 				let instance = RenderManager {
 					inner: Arc::new(Mutex::new(0)),
 					_sleepTime: 0u64,
+                    camera: CameraState::new(),
 				};
 
 				// Put it in the heap so it can outlive this call
@@ -102,7 +108,7 @@ impl RenderManager {
 
 	}
 
-	fn mainLoop(&self) {
+	fn mainLoop(&mut self) {
 
 		use glium::{DisplayBuild, Surface};
 		let display = glium::glutin::WindowBuilder::new()
@@ -150,9 +156,14 @@ impl RenderManager {
 
 		let mut t:f32 = -0.5;
 
-		let view = view_matrix(&[0.5, 0.2, -3.0], &[-0.5, -0.2, 3.0], &[0.0, 1.0, 0.0]);
+		// let view = view_matrix(&[0.5, 0.2, -3.0], &[-0.5, -0.2, 3.0], &[0.0, 1.0, 0.0]);
+
+		// self.camera = ;
 
 		loop {
+
+            self.camera.update();
+
 			let mut target = display.draw();
 			target.clear_color_and_depth((0.0, 0.0, 1.0, 1.0), 1.0);
 
@@ -167,23 +178,7 @@ impl RenderManager {
 				[t, 0.0, 0.0, 1.0f32]
 			];
 
-			let perspective = {
-				let (width, height) = target.get_dimensions();
-				let aspect_ratio = height as f32 / width as f32;
 
-				let fov: f32 = 3.141592 / 3.0;
-				let zfar = 1024.0;
-				let znear = 0.1;
-
-				let f = 1.0 / (fov / 2.0).tan();
-
-				[
-					[f *   aspect_ratio   ,    0.0,              0.0              ,   0.0],
-					[         0.0         ,     f ,              0.0              ,   0.0],
-					[         0.0         ,    0.0,  (zfar+znear)/(zfar-znear)    ,   1.0],
-					[         0.0         ,    0.0, -(2.0*zfar*znear)/(zfar-znear),   0.0],
-				]
-			};
 
 			let light = [1.4, 0.4, 0.7f32];
 
@@ -198,11 +193,11 @@ impl RenderManager {
 
 			target.draw(&vertex_buffer,
 						&glium::index::NoIndices(glium::index::PrimitiveType::TrianglesList),
-						&t_program, &uniform! { model: model, view: view, perspective: perspective,
+						&t_program, &uniform! { model: model, view: self.camera.get_view(), perspective: self.camera.get_perspective(),
 									u_light: light, diffuse_tex: &diffuse_texture, normal_tex: &normal_map }, &params).unwrap();
 
 			target.draw(&shape, glium::index::NoIndices(glium::index::PrimitiveType::TriangleStrip), &program,
-						&uniform! { model: model, view: view, perspective: perspective,
+						&uniform! { model: model, view: self.camera.get_view(), perspective: self.camera.get_perspective(),
 									u_light: light, diffuse_tex: &diffuse_texture, normal_tex: &normal_map },
 						&params).unwrap();
 
@@ -215,23 +210,25 @@ impl RenderManager {
 			for ev in display.poll_events() {
 				match ev {
 					glium::glutin::Event::Closed => return,
-					glium::glutin::Event::KeyboardInput(elementState, u8, keyCode) => KeyboardInput(elementState, keyCode),
-					_ => ()
+					// glium::glutin::Event::KeyboardInput(elementState, u8, keyCode) => KeyboardInput(elementState, keyCode),
+                    ev => self.process_input(&ev),
 				}
 			}
 		}
 	}
 
-}
+    pub fn process_input(&mut self, event: &glutin::Event) {
+        self.camera.process_input(event);
+    }
 
-use glium::glutin::{ElementState, VirtualKeyCode};
-pub fn KeyboardInput(elementState:ElementState, keyCode:Option<VirtualKeyCode>)
-{
-	if elementState == ElementState::Pressed{
-		print!("down{:?}", keyCode);
-		// camera.process_input(&ev);
-	}
-	else {
-		print!("up{:?}", keyCode);
-	}
+    pub fn KeyboardInput(elementState:ElementState, keyCode:Option<VirtualKeyCode>)
+    {
+        if elementState == ElementState::Pressed{
+            print!("down{:?}", keyCode);
+            // camera.process_input(&ev);
+        }
+        else {
+            print!("up{:?}", keyCode);
+        }
+    }
 }

@@ -8,6 +8,8 @@ mod mainwnd;
 mod rendermanager;
 mod filesystem;
 mod resourcemanager;
+mod camera;
+mod vector;
 
 use game::Game;
 // use mainwnd::MainWnd;
