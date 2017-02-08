@@ -3,6 +3,8 @@ use std::mem;
 
 use rendermanager::RenderManager;
 
+use std::thread;
+
 #[derive(Clone)]
 pub struct Game {
 	pub inner: Arc<Mutex<u8>>,
@@ -39,6 +41,19 @@ impl Game {
         }
     }
 
+    pub fn create(& self)
+    {
+        // render create
+
+        let renderThread = thread::spawn(move || {
+            let renderManager = RenderManager::instance();
+            // renderManager.startUp()
+
+        });
+
+        renderThread.join().unwrap();
+    }
+
 	pub fn frame(&mut self)
 	{
 		if self._lastFrameTime == 0u64 {
@@ -68,14 +83,14 @@ impl Game {
 		return time::precise_time_ns();
 	}
 
-	fn update(elapsedTime:u64)
+    pub fn update(elapsedTime:u64)
 	{
-		RenderManager::instance().render(elapsedTime)
+
 	}
 
-	fn render(elapsedTime:u64)
+    pub fn render(elapsedTime:u64)
 	{
-
+        RenderManager::instance().startUp();
 	}
 	
 }
