@@ -6,8 +6,8 @@ use vector::Vec3D;
 
 use glium::glutin;
 
-#[derive(Clone)]
-pub struct CameraState {
+#[derive(Clone,Debug)]
+pub struct Camera {
 	aspect_ratio: f32,
 	position: (f32, f32, f32),
 	direction: (f32, f32, f32),
@@ -18,11 +18,13 @@ pub struct CameraState {
 	moving_right: bool,
 	moving_forward: bool,
 	moving_backward: bool,
+	moving_forward_once: bool,
+	moving_backward_once: bool,
 }
 
-impl CameraState {
-	pub fn new() -> CameraState {
-		CameraState {
+impl Camera {
+	pub fn new() -> Camera {
+		Camera {
 			aspect_ratio: 1024.0 / 768.0,
 			position: (0.1, 0.1, 1.0),
 			direction: (0.0, 0.0, -1.0),
@@ -32,6 +34,8 @@ impl CameraState {
 			moving_right: false,
 			moving_forward: false,
 			moving_backward: false,
+			moving_forward_once: false,
+			moving_backward_once: false,
 		}
 	}
 
@@ -155,6 +159,20 @@ impl CameraState {
 			self.position.1 -= f.1 * 0.01;
 			self.position.2 -= f.2 * 0.01;
 		}
+
+		if self.moving_forward_once {
+			self.position.0 += f.0 * 0.05;
+			self.position.1 += f.1 * 0.05;
+			self.position.2 += f.2 * 0.05;
+			self.moving_forward_once = false;
+		}
+
+		if self.moving_backward_once {
+			self.position.0 -= f.0 * 0.05;
+			self.position.1 -= f.1 * 0.05;
+			self.position.2 -= f.2 * 0.05;
+			self.moving_backward_once = false;
+		}
 	}
 
 	pub fn process_input(&mut self, event: &glutin::Event)
@@ -195,6 +213,16 @@ impl CameraState {
 			},
 			&glutin::Event::KeyboardInput(glutin::ElementState::Released, _, Some(glutin::VirtualKeyCode::S)) => {
 				self.moving_backward = false;
+			},
+			&glutin::Event::MouseWheel(d, _) => match d {
+				glutin::MouseScrollDelta::LineDelta(_, s) | glutin::MouseScrollDelta::PixelDelta(_, s) => {
+					if s > 0.0 {
+						self.moving_forward_once = true;
+					} else if s < 0.0 {
+						self.moving_backward_once = true;
+					}
+
+				}
 			},
 			_ => {}
 		}

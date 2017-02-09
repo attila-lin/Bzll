@@ -4,11 +4,12 @@ use image;
 use mainwnd::MainWnd;
 use filesystem;
 use resourcemanager;
-use camera::CameraState;
+use camera::Camera;
 
 use std::io::Cursor;
 use std::sync::{Arc, Mutex, Once, ONCE_INIT};
 use std::{mem, thread};
+use std::time::Duration;
 
 use glium::glutin;
 use glium::glutin::{ElementState, VirtualKeyCode};
@@ -19,7 +20,6 @@ pub struct RenderManager {
 	// concurrent access
 	pub inner: Arc<Mutex<u8>>,
 	pub _sleepTime: u64,
-    pub camera: CameraState,
 }
 
 #[derive(Copy, Clone)]
@@ -65,9 +65,13 @@ fn view_matrix(position: &[f32; 3], direction: &[f32; 3], up: &[f32; 3]) -> [[f3
     ]
 }
 
-
+use scenemanager::SceneManager;
 impl RenderManager {
 	pub fn startUp(&mut self) {
+		SceneManager::instance().addCamera(Camera::new());
+		println!("111111111111111");
+		SceneManager::instance().getCamera(0);
+
 		self.mainLoop();
 	}
 
@@ -86,7 +90,6 @@ impl RenderManager {
 				let instance = RenderManager {
 					inner: Arc::new(Mutex::new(0)),
 					_sleepTime: 0u64,
-                    camera: CameraState::new(),
 				};
 
 				// Put it in the heap so it can outlive this call
@@ -158,16 +161,15 @@ impl RenderManager {
 
 		// let view = view_matrix(&[0.5, 0.2, -3.0], &[-0.5, -0.2, 3.0], &[0.0, 1.0, 0.0]);
 
-		// self.camera = ;
 
 		loop {
-
-            self.camera.update();
+            let mut camera: Camera = SceneManager::instance().getCamera(0);
+			camera.update();
 
 			let mut target = display.draw();
 			target.clear_color_and_depth((0.0, 0.0, 1.0, 1.0), 1.0);
 
-			t += 0.001;
+			t += 0.00001;
 			if t > 0.5 {
 				t = -0.5;
 			}
@@ -177,8 +179,6 @@ impl RenderManager {
 				[0.0, 0.0, 1.0, 0.0],
 				[t, 0.0, 0.0, 1.0f32]
 			];
-
-
 
 			let light = [1.4, 0.4, 0.7f32];
 
@@ -193,18 +193,19 @@ impl RenderManager {
 
 			target.draw(&vertex_buffer,
 						&glium::index::NoIndices(glium::index::PrimitiveType::TrianglesList),
-						&t_program, &uniform! { model: model, view: self.camera.get_view(), perspective: self.camera.get_perspective(),
-									u_light: light, diffuse_tex: &diffuse_texture, normal_tex: &normal_map }, &params).unwrap();
+						&t_program, &uniform! { model: model, view: camera.get_view(), perspective: camera.get_perspective(),
+									u_light: light, diffuse_tex: &diffuse_texture, normal_tex: &normal_map },
+						&params).unwrap();
 
-			target.draw(&shape, glium::index::NoIndices(glium::index::PrimitiveType::TriangleStrip), &program,
-						&uniform! { model: model, view: self.camera.get_view(), perspective: self.camera.get_perspective(),
+			target.draw(&shape,
+						glium::index::NoIndices(glium::index::PrimitiveType::TriangleStrip),
+						&program, &uniform! { model: model, view: camera.get_view(), perspective: camera.get_perspective(),
 									u_light: light, diffuse_tex: &diffuse_texture, normal_tex: &normal_map },
 						&params).unwrap();
 
 			target.finish().unwrap();
 
-			use std::time::Duration;
-			use std::thread;
+
 			thread::sleep(Duration::from_millis(self._sleepTime));
 
 			for ev in display.poll_events() {
@@ -218,14 +219,14 @@ impl RenderManager {
 	}
 
     pub fn process_input(&mut self, event: &glutin::Event) {
-        self.camera.process_input(event);
+		let mut camera = SceneManager::instance().getCamera(0);
+        camera.process_input(event);
     }
 
     pub fn KeyboardInput(elementState:ElementState, keyCode:Option<VirtualKeyCode>)
     {
         if elementState == ElementState::Pressed{
             print!("down{:?}", keyCode);
-            // camera.process_input(&ev);
         }
         else {
             print!("up{:?}", keyCode);
