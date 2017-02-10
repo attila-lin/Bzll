@@ -107,9 +107,10 @@ pub fn load_wavefront(display: &Display, data: &[u8]) -> VertexBufferAny {
 
 #[cfg(test)]
 mod tests {
+
+    use super::*;
     fn test_load_obj() {
         // only irregular version
-        use resourcemanager;
-        resourcemanager::load_obj("./artist/Characters/Borderlands2-Zero/zero.obj");
+        load_obj("./artist/Characters/Borderlands2-Zero/zero.obj");
     }
 }

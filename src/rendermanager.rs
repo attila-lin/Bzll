@@ -183,3 +183,11 @@ impl RenderManager {
         camera.process_input(event);
     }
 }
+
+
+#[cfg(test)]
+mod tests {
+	use super::*;
+	fn test_load_obj() {
+	}
+}

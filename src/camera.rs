@@ -226,3 +226,11 @@ impl Camera {
 		}
 	}
 }
+
+
+#[cfg(test)]
+mod tests {
+	use super::*;
+	fn test_load_obj() {
+	}
+}

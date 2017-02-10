@@ -15,7 +15,6 @@ pub struct Game {
 }
 
 impl Game {
-
 	pub fn instance() -> Game {
         // Initialize it to a null value
         static mut SINGLETON: *const Game = 0 as *const Game;
@@ -83,8 +82,6 @@ impl Game {
 	}
 
 	pub fn get_game_time() -> u64 {
-
-
 		return time::precise_time_ns();
 	}
 
@@ -101,3 +98,10 @@ impl Game {
 	
 }
 
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    fn test_load_obj() {
+    }
+}

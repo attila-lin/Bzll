@@ -44,11 +44,19 @@ impl SceneManager {
 impl Interface for SceneManager {
     fn add_camera(&mut self, camera: Camera){
         self.cameras.lock().unwrap().push(camera);
-        println!("length {}", self.cameras.lock().unwrap().len());
+        // println!("length {}", self.cameras.lock().unwrap().len());
     }
 
     fn get_camera(&self, index: usize) -> Camera {
-        println!("!!!!!!!{} {}", index, self.cameras.lock().unwrap().len());
+        // println!("!!!!!!!{} {}", index, self.cameras.lock().unwrap().len());
         (self.cameras.lock().unwrap())[index].clone()
+    }
+}
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    fn test_load_obj() {
     }
 }
