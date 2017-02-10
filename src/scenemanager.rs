@@ -10,8 +10,8 @@ pub struct SceneManager {
 }
 
 pub trait Interface {
-    fn addCamera(&mut self, camera: Camera);
-    fn getCamera(&self, index: usize) -> Camera;
+    fn add_camera(&mut self, camera: Camera);
+    fn get_camera(&self, index: usize) -> Camera;
 }
 
 impl SceneManager {
@@ -42,12 +42,12 @@ impl SceneManager {
 }
 
 impl Interface for SceneManager {
-    fn addCamera(&mut self, camera: Camera){
+    fn add_camera(&mut self, camera: Camera){
         self.cameras.lock().unwrap().push(camera);
         println!("length {}", self.cameras.lock().unwrap().len());
     }
 
-    fn getCamera(&self, index: usize) -> Camera {
+    fn get_camera(&self, index: usize) -> Camera {
         println!("!!!!!!!{} {}", index, self.cameras.lock().unwrap().len());
         (self.cameras.lock().unwrap())[index].clone()
     }

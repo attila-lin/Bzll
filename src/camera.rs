@@ -1,9 +1,5 @@
 extern crate rand;
 
-use std::f64;
-
-use vector::Vec3D;
-
 use glium::glutin;
 
 #[derive(Clone,Debug)]
@@ -39,10 +35,12 @@ impl Camera {
 		}
 	}
 
+	#[allow(dead_code)]
 	pub fn set_position(&mut self, pos: (f32, f32, f32)) {
 		self.position = pos;
 	}
 
+	#[allow(dead_code)]
 	pub fn set_direction(&mut self, dir: (f32, f32, f32)) {
 		self.direction = dir;
 	}

@@ -1,7 +1,4 @@
 use std::ops::*;
-use std::fmt::Debug;
-// extern crate num;
-// use num::{Zero, NumCast};
 
 #[derive(Debug, PartialEq, Clone)]
 pub struct Vec2D

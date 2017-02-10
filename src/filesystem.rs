@@ -3,6 +3,7 @@ use std::fs::File;
 use std::path::Path;
 use std::error::Error;
 
+#[allow(dead_code)]
 enum FileStatus
 {
 	Ok,           			
@@ -13,6 +14,7 @@ enum FileStatus
 	UnknownError
 }
 
+#[allow(dead_code)]
 enum AccessMode
 {
     Read,  
@@ -43,6 +45,7 @@ pub fn open(p: &str) -> ::std::string::String {
     }
 }
 
+#[allow(dead_code)]
 pub fn read_to_buffer(p: &str) -> ::std::string::String {
     let path = Path::new(p);
     let display = path.display();

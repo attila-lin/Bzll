@@ -46,7 +46,7 @@ pub fn load_obj(p: &str){
     // loop {
     // 	let mut line = lines.next();
     // }
-    let mut split = s.split("\n");
+    let split = s.split("\n");
     let vec: Vec<&str> = split.collect();
     for si in &vec {
 	    // println!("{}", si);

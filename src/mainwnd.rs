@@ -1,18 +1,17 @@
-use glium;
-
 use std::sync::{Arc, Mutex, Once, ONCE_INIT};
-use std::{mem, thread};
+use std::mem;
 
 #[derive(Clone)]
 pub struct MainWnd {
     pub inner: Arc<Mutex<u8>>,
 }
 impl MainWnd {
+    #[allow(dead_code)]
     fn init(&self)
     {
 
     }
-
+    #[allow(dead_code)]
     pub fn instance() -> MainWnd {
         // Initialize it to a null value
         static mut SINGLETON: *const MainWnd = 0 as *const MainWnd;
@@ -20,7 +19,7 @@ impl MainWnd {
 
         unsafe {
             ONCE.call_once(|| {
-                use glium::{DisplayBuild, Surface};
+
                 // Make it
                 let instance = MainWnd {
                     inner: Arc::new(Mutex::new(0))

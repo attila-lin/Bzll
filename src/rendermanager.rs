@@ -1,7 +1,6 @@
 use glium;
 use image;
 
-use mainwnd::MainWnd;
 use filesystem;
 use resourcemanager;
 use camera::Camera;
@@ -12,14 +11,13 @@ use std::{mem, thread};
 use std::time::Duration;
 
 use glium::glutin;
-use glium::glutin::{ElementState, VirtualKeyCode};
 
 #[derive(Clone)]
 pub struct RenderManager {
 	// Since we will be used in many threads, we need to protect
 	// concurrent access
 	pub inner: Arc<Mutex<u8>>,
-	pub _sleepTime: u64,
+	pub sleep_time: Arc<Mutex<u64>>,
 }
 
 #[derive(Copy, Clone)]
@@ -31,51 +29,16 @@ struct Vertex {
 
 implement_vertex!(Vertex, position, normal, tex_coords);
 
-fn view_matrix(position: &[f32; 3], direction: &[f32; 3], up: &[f32; 3]) -> [[f32; 4]; 4] {
-    let f = {
-        let f = direction;
-        let len = f[0] * f[0] + f[1] * f[1] + f[2] * f[2];
-        let len = len.sqrt();
-        [f[0] / len, f[1] / len, f[2] / len]
-    };
-
-    let s = [up[1] * f[2] - up[2] * f[1],
-             up[2] * f[0] - up[0] * f[2],
-             up[0] * f[1] - up[1] * f[0]];
-
-    let s_norm = {
-        let len = s[0] * s[0] + s[1] * s[1] + s[2] * s[2];
-        let len = len.sqrt();
-        [s[0] / len, s[1] / len, s[2] / len]
-    };
-
-    let u = [f[1] * s_norm[2] - f[2] * s_norm[1],
-             f[2] * s_norm[0] - f[0] * s_norm[2],
-             f[0] * s_norm[1] - f[1] * s_norm[0]];
-
-    let p = [-position[0] * s_norm[0] - position[1] * s_norm[1] - position[2] * s_norm[2],
-             -position[0] * u[0] - position[1] * u[1] - position[2] * u[2],
-             -position[0] * f[0] - position[1] * f[1] - position[2] * f[2]];
-
-    [
-        [s_norm[0], u[0], f[0], 0.0],
-        [s_norm[1], u[1], f[1], 0.0],
-        [s_norm[2], u[2], f[2], 0.0],
-        [p[0], p[1], p[2], 1.0],
-    ]
-}
-
 use scenemanager::SceneManager;
 impl RenderManager {
-	pub fn startUp(&mut self) {
-		SceneManager::instance().addCamera(Camera::new());
-		println!("111111111111111");
-		SceneManager::instance().getCamera(0);
+	pub fn start_up(&mut self) {
+		SceneManager::instance().add_camera(Camera::new());
 
-		self.mainLoop();
+		self.main_loop();
 	}
 
-	pub fn shoutDown() {
+	#[allow(dead_code)]
+	pub fn shout_down() {
 
 	}
 
@@ -89,7 +52,7 @@ impl RenderManager {
 				// Make it
 				let instance = RenderManager {
 					inner: Arc::new(Mutex::new(0)),
-					_sleepTime: 0u64,
+					sleep_time:Arc::new(Mutex::new(0u64)),
 				};
 
 				// Put it in the heap so it can outlive this call
@@ -101,17 +64,18 @@ impl RenderManager {
 		}
 	}
 
-	pub fn render(&mut self, elapsedTime:u64)
+	pub fn render(&mut self, elapsed_time:u64)
 	{
-		self._sleepTime = (1000.0 / 60.0) as u64 - elapsedTime;
+		*self.sleep_time.lock().unwrap() = (1000.0 / 60.0) as u64 - elapsed_time;
 	}
 
+	#[allow(dead_code)]
 	fn pause()
 	{
 
 	}
 
-	fn mainLoop(&mut self) {
+	fn main_loop(&mut self) {
 
 		use glium::{DisplayBuild, Surface};
 		let display = glium::glutin::WindowBuilder::new()
@@ -159,11 +123,8 @@ impl RenderManager {
 
 		let mut t:f32 = -0.5;
 
-		// let view = view_matrix(&[0.5, 0.2, -3.0], &[-0.5, -0.2, 3.0], &[0.0, 1.0, 0.0]);
-
-
 		loop {
-            let mut camera: Camera = SceneManager::instance().getCamera(0);
+            let mut camera: Camera = SceneManager::instance().get_camera(0);
 			camera.update();
 
 			let mut target = display.draw();
@@ -206,12 +167,11 @@ impl RenderManager {
 			target.finish().unwrap();
 
 
-			thread::sleep(Duration::from_millis(self._sleepTime));
+			thread::sleep(Duration::from_millis(*self.sleep_time.lock().unwrap()));
 
 			for ev in display.poll_events() {
 				match ev {
 					glium::glutin::Event::Closed => return,
-					// glium::glutin::Event::KeyboardInput(elementState, u8, keyCode) => KeyboardInput(elementState, keyCode),
                     ev => self.process_input(&ev),
 				}
 			}
@@ -219,17 +179,7 @@ impl RenderManager {
 	}
 
     pub fn process_input(&mut self, event: &glutin::Event) {
-		let mut camera = SceneManager::instance().getCamera(0);
+		let mut camera = SceneManager::instance().get_camera(0);
         camera.process_input(event);
-    }
-
-    pub fn KeyboardInput(elementState:ElementState, keyCode:Option<VirtualKeyCode>)
-    {
-        if elementState == ElementState::Pressed{
-            print!("down{:?}", keyCode);
-        }
-        else {
-            print!("up{:?}", keyCode);
-        }
     }
 }

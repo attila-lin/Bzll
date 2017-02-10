@@ -19,8 +19,6 @@ use game::Game;
 // use mainwnd::MainWnd;
 use resourcemanager::load_obj;
 
-use std::thread;
-
 fn main() {
 
     // let mainWnd = MainWnd::instance();

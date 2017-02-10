@@ -2,16 +2,16 @@ use std::sync::{Arc, Mutex, Once, ONCE_INIT};
 use std::mem;
 
 use rendermanager::RenderManager;
-
+use time;
 use std::thread;
 
 #[derive(Clone)]
 pub struct Game {
 	pub inner: Arc<Mutex<u8>>,
-	_frameLastFPS: u64,
-	_lastFrameTime: u64,
-	_frameCount: i32,
-	_frameRate: i32,
+	frame_last_fps: u64,
+	last_frame_time: u64,
+	frame_count: i32,
+	frame_rate: i32,
 }
 
 impl Game {
@@ -26,10 +26,11 @@ impl Game {
                 // Make it
                 let instance = Game {
                     inner: Arc::new(Mutex::new(0)),
-                    _frameCount: 0,
-                    _frameLastFPS: 0,
-                    _frameRate: 0,
-                    _lastFrameTime: 0u64,
+                    frame_last_fps: 0u64,
+                    last_frame_time: 0u64,
+                    frame_count: 0,
+                    frame_rate: 0,
+
                 };
 
                 // Put it in the heap so it can outlive this call
@@ -52,52 +53,50 @@ impl Game {
 
         // render create
 
-        let renderThread = thread::spawn(move || {
-            let renderManager = RenderManager::instance();
-            // renderManager.startUp()
-
+        let render_thread = thread::spawn(move || {
+            RenderManager::instance().start_up();
         });
 
-        renderThread.join().unwrap();
+        render_thread.join().unwrap();
     }
 
 	pub fn frame(&mut self)
 	{
-		if self._lastFrameTime == 0u64 {
-			self._lastFrameTime = Game::getGameTime();
+		if self.last_frame_time == 0u64 {
+			self.last_frame_time = Game::get_game_time();
 		}
 
-		let frameTime = Game::getGameTime();
-		let elapsedTime = frameTime - self._lastFrameTime;
-        self._lastFrameTime = frameTime;
+		let frame_time = Game::get_game_time();
+		let elapsed_time = frame_time - self.last_frame_time;
+        self.last_frame_time = frame_time;
 
-        Game::update(elapsedTime);
-        Game::render(elapsedTime);
+        Game::update(elapsed_time);
+        Game::render(elapsed_time);
 
-		self._frameCount += 1;
-		if (Game::getGameTime() - self._frameLastFPS) >= 1000
+		self.frame_count += 1;
+		if (Game::get_game_time() - self.frame_last_fps) >= 1000
         {
-            self._frameRate = self._frameCount;
-            self._frameCount = 0;
-            self._frameLastFPS = Game::getGameTime();
+            self.frame_rate = self.frame_count;
+            self.frame_count = 0;
+            self.frame_last_fps = Game::get_game_time();
         }
-
 	}
 
-	pub fn getGameTime() -> u64 {
-		use time;
+	pub fn get_game_time() -> u64 {
+
 
 		return time::precise_time_ns();
 	}
 
-    fn update(elapsedTime:u64)
+    #[allow(dead_code)]
+    fn update(elapsed_time:u64)
 	{
-
+        elapsed_time;
 	}
 
-    fn render(elapsedTime:u64)
-	{
-        RenderManager::instance().startUp();
+    fn render(elapsed_time:u64)
+    {
+        RenderManager::instance().render(elapsed_time)
 	}
 	
 }
