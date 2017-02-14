@@ -18,7 +18,6 @@ pub struct RenderManager {
 	// concurrent access
 	pub inner: Arc<Mutex<u8>>,
 	pub sleep_time: Arc<Mutex<u64>>,
-	pub
 }
 
 #[derive(Copy, Clone)]
@@ -181,8 +180,8 @@ impl RenderManager {
 		}
 	}
 
-	pub fn exit(){
-		return
+	pub fn exit() {
+		return;
 	}
 
     pub fn process_input(&mut self, event: &glutin::Event) {
