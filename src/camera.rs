@@ -175,6 +175,7 @@ impl Camera {
 
 	pub fn process_input(&mut self, event: &glutin::Event)
 	{
+		// 主线程才能修改
 		match event {
 			&glutin::Event::KeyboardInput(glutin::ElementState::Pressed, _, Some(glutin::VirtualKeyCode::Space)) => {
 				self.moving_up = true;
