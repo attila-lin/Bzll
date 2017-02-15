@@ -20,6 +20,7 @@ lazy_static = "*"
 time = "*"
 hwloc = "0.4.0"
 num_cpus = "*"
+nom = "^2.1"
 flame = { version = "^0.1.9", optional = true }
 flamer = { version = "^0.1.2", optional = true }
 cgmath = "0.9.1"

@@ -95,9 +95,7 @@ impl Game {
     {
         RenderManager::instance().render(elapsed_time)
 	}
-	
 }
-
 
 #[cfg(test)]
 mod tests {

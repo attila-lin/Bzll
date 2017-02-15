@@ -1,3 +1,6 @@
+// send command to renderengine
+
+
 use glium;
 use image;
 
@@ -12,12 +15,19 @@ use std::time::Duration;
 
 use glium::glutin;
 
+pub enum RenderManagerState{
+	UnInited,
+	Inited,
+	End
+}
+
 #[derive(Clone)]
 pub struct RenderManager {
 	// Since we will be used in many threads, we need to protect
 	// concurrent access
 	pub inner: Arc<Mutex<u8>>,
 	pub sleep_time: Arc<Mutex<u64>>,
+	pub state: Arc<Mutex<RenderManagerState>>,
 }
 
 #[derive(Copy, Clone)]
@@ -53,6 +63,7 @@ impl RenderManager {
 				let instance = RenderManager {
 					inner: Arc::new(Mutex::new(0)),
 					sleep_time:Arc::new(Mutex::new(0u64)),
+					state:Arc::new(Mutex::new(RenderManagerState::UnInited)),
 				};
 
 				// Put it in the heap so it can outlive this call
@@ -64,9 +75,37 @@ impl RenderManager {
 		}
 	}
 
+	pub fn update(&mut self){
+		self.on_update_begin();
+
+		self.on_update_end();
+	}
+
+	fn on_update_begin(&self){
+
+	}
+
+	fn on_update_end(&self){
+
+	}
+
 	pub fn render(&mut self, elapsed_time:u64)
 	{
+		match *self.state.lock().unwrap() {
+			RenderManagerState::End => return,
+			_ => {},
+		}
+		self.on_render_begin();
 		*self.sleep_time.lock().unwrap() = (1000.0 / 60.0) as u64 - elapsed_time;
+		self.on_render_end();
+	}
+
+	fn on_render_begin(&self){
+
+	}
+
+	fn on_render_end(&self) {
+
 	}
 
 	#[allow(dead_code)]
@@ -125,7 +164,7 @@ impl RenderManager {
 
 		loop {
 			SceneManager::instance().update();
-            let mut camera: Camera = SceneManager::instance().get_camera(0);
+            let camera: Camera = SceneManager::instance().get_camera(0);
 
 			let mut target = display.draw();
 			target.clear_color_and_depth((0.0, 0.0, 1.0, 1.0), 1.0);
@@ -171,7 +210,7 @@ impl RenderManager {
 
 			for ev in display.poll_events() {
 				match ev {
-					glium::glutin::Event::Closed => return,
+					glium::glutin::Event::Closed => {self.exit(); return},
                     ev => self.process_input(&ev),
 				}
 			}
@@ -180,7 +219,8 @@ impl RenderManager {
 		}
 	}
 
-	pub fn exit() {
+	pub fn exit(&mut self) {
+		*self.state.lock().unwrap() = RenderManagerState::End;
 		return;
 	}
 
@@ -188,7 +228,6 @@ impl RenderManager {
 		SceneManager::instance().process_input(event);
     }
 }
-
 
 #[cfg(test)]
 mod tests {
