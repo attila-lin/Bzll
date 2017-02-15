@@ -11,7 +11,7 @@ pub struct SceneManager {
     cameras: Arc<Mutex<Vec<Camera>>>,
 }
 
-pub trait Interface {
+pub trait SMInterface {
     fn add_camera(&mut self, camera: Camera);
     fn get_camera(&self, index: usize) -> Camera;
     fn update(&self);
@@ -25,16 +25,13 @@ impl SceneManager {
             cameras: Arc::new(Mutex::new(Vec::new())),
         }
     }
-
-    pub fn instance() -> Box<Interface> {
+    pub fn instance() -> Box<SMInterface> {
         // Initialize it to a null value
         static mut SINGLETON: *const SceneManager = 0 as *const SceneManager;
         static ONCE: Once = ONCE_INIT;
 
         unsafe {
             ONCE.call_once(|| {
-                println!("SceneManager");
-
                 // Put it in the heap so it can outlive this call
                 SINGLETON = mem::transmute(Box::new(SceneManager::new()));
             });
@@ -43,9 +40,10 @@ impl SceneManager {
             Box::new((*SINGLETON).clone())
         }
     }
+
 }
 
-impl Interface for SceneManager {
+impl SMInterface for SceneManager {
     fn add_camera(&mut self, camera: Camera){
         self.cameras.lock().unwrap().push(camera);
         // println!("length {}", self.cameras.lock().unwrap().len());
