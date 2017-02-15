@@ -17,7 +17,7 @@ mod scenemanager;
 
 use game::Game;
 // use mainwnd::MainWnd;
-use resourcemanager::load_obj;
+// use resourcemanager::load_obj;
 
 fn main() {
 
@@ -28,5 +28,5 @@ fn main() {
 
     game.frame();
 
-    resourcemanager::load_obj("./artist/Characters/Borderlands2-Zero/zero.obj");
+    // resourcemanager::load_obj("./artist/Characters/Borderlands2-Zero/zero.obj");
 }

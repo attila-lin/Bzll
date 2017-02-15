@@ -99,6 +99,7 @@ impl Camera {
 	}
 
 	pub fn update(&mut self) {
+		// println!("update");
 		let f = {
 			let f = self.direction;
 			let len = f.0 * f.0 + f.1 * f.1 + f.2 * f.2;
@@ -121,7 +122,7 @@ impl Camera {
 		let u = (s.1 * f.2 - s.2 * f.1,
 				 s.2 * f.0 - s.0 * f.2,
 				 s.0 * f.1 - s.1 * f.0);
-
+		
 		if self.moving_up {
 			self.position.0 += u.0 * 0.01;
 			self.position.1 += u.1 * 0.01;

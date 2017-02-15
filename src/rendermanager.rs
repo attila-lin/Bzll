@@ -124,8 +124,8 @@ impl RenderManager {
 		let mut t:f32 = -0.5;
 
 		loop {
+			SceneManager::instance().update();
             let mut camera: Camera = SceneManager::instance().get_camera(0);
-			camera.update();
 
 			let mut target = display.draw();
 			target.clear_color_and_depth((0.0, 0.0, 1.0, 1.0), 1.0);
@@ -185,8 +185,7 @@ impl RenderManager {
 	}
 
     pub fn process_input(&mut self, event: &glutin::Event) {
-		let mut camera = SceneManager::instance().get_camera(0);
-        camera.process_input(event);
+		SceneManager::instance().process_input(event);
     }
 }
 

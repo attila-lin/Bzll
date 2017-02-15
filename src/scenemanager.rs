@@ -3,6 +3,8 @@ use std::mem;
 
 use camera::Camera;
 
+use glium::glutin;
+
 #[derive(Clone,Debug)]
 pub struct SceneManager {
     pub inner: Arc<Mutex<u8>>,
@@ -12,6 +14,8 @@ pub struct SceneManager {
 pub trait Interface {
     fn add_camera(&mut self, camera: Camera);
     fn get_camera(&self, index: usize) -> Camera;
+    fn update(&self);
+    fn process_input(&self, event: &glutin::Event);
 }
 
 impl SceneManager {
@@ -50,6 +54,14 @@ impl Interface for SceneManager {
     fn get_camera(&self, index: usize) -> Camera {
         // println!("!!!!!!!{} {}", index, self.cameras.lock().unwrap().len());
         (self.cameras.lock().unwrap())[index].clone()
+    }
+
+    fn update(&self) {
+        (self.cameras.lock().unwrap())[0].update()
+    }
+
+    fn process_input(&self, event: &glutin::Event) {
+        (self.cameras.lock().unwrap())[0].process_input(event)
     }
 }
 

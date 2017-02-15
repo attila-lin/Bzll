@@ -28,3 +28,9 @@ Enlighten: image-based lighting/IBL
 
 Binding thread to one core 
 + http://nitschinger.at/Binding-Threads-And-Processes-to-CPUs-in-Rust/
+
+CPU GPU occlusion culling
+
+Video
+
+Audio
