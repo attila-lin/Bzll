@@ -44,7 +44,6 @@ impl Game {
     pub fn create(& self)
     {
         // render create
-
         let render_thread = thread::spawn(move || {
             RenderManager::instance().start_up();
         });
@@ -52,7 +51,7 @@ impl Game {
         render_thread.join().unwrap();
     }
 
-	pub fn frame(&mut self)
+	pub fn run(&mut self)
 	{
 		if self.last_frame_time == 0u64 {
 			self.last_frame_time = Game::get_game_time();
