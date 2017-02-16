@@ -24,10 +24,12 @@ num_cpus = "*"
 nom = "^2.1"
 cgmath = "0.9.1"
 genmesh = "0.4"
+dxguid = "*"
+winit = "*"
+
 obj = { version = "0.5", features = ["usegenmesh"] }
 flame = { version = "^0.1.9", optional = true }
 flamer = { version = "^0.1.2", optional = true }
-
 
 [target.'cfg(windows)'.dependencies]
 winapi="*"

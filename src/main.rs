@@ -2,9 +2,11 @@
 extern crate glium;
 extern crate image;
 extern crate time;
-extern crate winit;
 extern crate lazy_static;
-
+extern crate log;
+extern crate dxguid;
+extern crate winapi;
+extern crate winit;
 
 mod game;
 mod mainwnd;
@@ -14,18 +16,17 @@ mod resourcemanager;
 mod camera;
 mod vector;
 mod scenemanager;
-
-
-
-use game::Game;
+mod rhi;
 // use mainwnd::MainWnd;
 // use resourcemanager::load_obj;
 
 fn main() {
+    use rhi::dx12::render;
+    println!("{}", render::hello());
 
-    let mut game = Game::instance();
-    game.create();
-    game.run();
+    let mut app = game::Game::instance();
+    app.create();
+    app.run();
 
     // resourcemanager::load_obj("./artist/Characters/Borderlands2-Zero/zero.obj");
 }

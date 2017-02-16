@@ -186,7 +186,6 @@ impl RenderManager {
 
 			target.finish().unwrap();
 
-
 			thread::sleep(Duration::from_millis(*self.sleep_time.lock().unwrap()));
 
 			for ev in display.poll_events() {
@@ -195,8 +194,6 @@ impl RenderManager {
 					ev => self.process_input(&ev),
 				}
 			}
-
-
 		}
 	}
 
