@@ -24,9 +24,7 @@ use game::Game;
 fn main() {
 
     let mut game = Game::instance();
-
     game.create();
-
     game.run();
 
     // resourcemanager::load_obj("./artist/Characters/Borderlands2-Zero/zero.obj");

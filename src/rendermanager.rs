@@ -96,7 +96,6 @@ impl RenderManager {
 	}
 
 	fn main_loop(&mut self) {
-
 		use glium::{DisplayBuild, Surface};
 		let display = glium::glutin::WindowBuilder::new()
 			.with_depth_buffer(24)
