@@ -12,6 +12,7 @@ pub struct SceneManager {
 }
 
 pub trait SMInterface {
+    fn init(&mut self);
     fn add_camera(&mut self, camera: Camera);
     fn get_camera(&self, index: usize) -> Camera;
     fn update(&self);
@@ -44,6 +45,10 @@ impl SceneManager {
 }
 
 impl SMInterface for SceneManager {
+    fn init(&mut self){
+        self.add_camera(Camera::new());
+    }
+
     fn add_camera(&mut self, camera: Camera){
         self.cameras.lock().unwrap().push(camera);
         // println!("length {}", self.cameras.lock().unwrap().len());

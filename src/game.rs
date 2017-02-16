@@ -43,13 +43,6 @@ impl Game {
 
     pub fn create(& self)
     {
-
-        // let ioThread = thread::spawn(move || {
-        //     let s = FileManager::instance();
-        //     let mut data = s.inner.lock().unwrap();
-        //     print!("hehe");
-        // });
-
         // render create
 
         let render_thread = thread::spawn(move || {

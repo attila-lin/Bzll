@@ -16,7 +16,7 @@ use std::time::Duration;
 pub enum RenderManagerState{
 	UnInited,
 	Inited,
-	End
+	Exited,
 }
 
 #[derive(Clone)]
@@ -53,6 +53,13 @@ impl RenderManager {
 			sleep_time:Arc::new(Mutex::new(0u64)),
 			state:Arc::new(Mutex::new(RenderManagerState::UnInited))
 		}
+	}
+
+	fn init(&mut self) {
+		// Init
+		SceneManager::instance().init();
+
+		*self.state.lock().unwrap() = RenderManagerState::Inited;
 	}
 
 	pub fn instance() -> Box<RMInterface>{
@@ -184,18 +191,13 @@ impl RenderManager {
 
 			for ev in display.poll_events() {
 				match ev {
-					glium::glutin::Event::Closed => {self.exit(); return},
+					glium::glutin::Event::Closed => {self.shout_down(); return},
 					ev => self.process_input(&ev),
 				}
 			}
 
 
 		}
-	}
-
-	fn exit(&mut self) {
-		*self.state.lock().unwrap() = RenderManagerState::End;
-		return;
 	}
 
 	fn process_input(&mut self, event: &glutin::Event) {
@@ -206,14 +208,15 @@ impl RenderManager {
 
 impl RMInterface for RenderManager {
 	fn start_up(&mut self) {
-		SceneManager::instance().add_camera(Camera::new());
+		self.init();
+
 
 		self.main_loop();
 	}
 
-	#[allow(dead_code)]
 	fn shout_down(&mut self) {
-
+		*self.state.lock().unwrap() = RenderManagerState::Exited;
+		return;
 	}
 
 	fn update(&mut self) {
@@ -224,7 +227,7 @@ impl RMInterface for RenderManager {
 
 	fn render(&mut self, elapsed_time:u64) {
 		match *self.state.lock().unwrap() {
-			RenderManagerState::End => return,
+			RenderManagerState::Exited => return,
 			_ => {},
 		}
 		self.on_render_begin();

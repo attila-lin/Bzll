@@ -21,12 +21,25 @@ time = "*"
 hwloc = "0.4.0"
 num_cpus = "*"
 nom = "^2.1"
-flame = { version = "^0.1.9", optional = true }
-flamer = { version = "^0.1.2", optional = true }
 cgmath = "0.9.1"
 genmesh = "0.4"
 obj = { version = "0.5", features = ["usegenmesh"] }
+flame = { version = "^0.1.9", optional = true }
+flamer = { version = "^0.1.2", optional = true }
+
+
+[target.'cfg(windows)'.dependencies]
+winapi="*"
+user32-sys="*"
+
+[target.'cfg(unix)'.dependencies]
+
+[target.'cfg(target_arch = "x86")'.dependencies]
+
+[target.'cfg(target_arch = "x86_64")'.dependencies]
 
 [features]
 default = []
 flame_it = ["flame", "flamer"]
+
+[dev-dependencies]
