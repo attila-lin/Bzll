@@ -101,7 +101,7 @@ impl RenderManager {
 			.with_depth_buffer(24)
 			.build_glium().unwrap();
 
-		let vertex_buffer = resourcemanager::load_wavefront(&display, include_bytes!("../artist/Objects/teapot.obj"));
+		// let vertex_buffer = resourcemanager::load_wavefront(&display, include_bytes!("../artist/Objects/teapot.obj"));
 
 		let shape = glium::vertex::VertexBuffer::new(&display, &[
 			Vertex { position: [-1.0,  1.0, 0.0], normal: [0.0, 0.0, -1.0], tex_coords: [0.0, 1.0] },
@@ -131,15 +131,15 @@ impl RenderManager {
 
 		let program = glium::Program::from_source(&display, vertex_shader_src_slice, fragment_shader_src_slice,
 												  None).unwrap();
-
+		/*
 		let t_vertex_shader_src = filesystem::open("./test/teapot_vertex_shader");
 		let t_vertex_shader_src_slice: &str = &t_vertex_shader_src;
 		let t_fragment_shader_src = filesystem::open("./test/teapot_fragment_shader");
 		let t_fragment_shader_src_slice: &str = &t_fragment_shader_src;
 
 		let t_program = glium::Program::from_source(&display, t_vertex_shader_src_slice, t_fragment_shader_src_slice,
-													None).unwrap();
-
+												None).unwrap();
+		*/
 		let mut t:f32 = -0.5;
 
 		loop {
@@ -170,12 +170,13 @@ impl RenderManager {
 				},
 				.. Default::default()
 			};
-
+			/*
 			target.draw(&vertex_buffer,
 						&glium::index::NoIndices(glium::index::PrimitiveType::TrianglesList),
 						&t_program, &uniform! { model: model, view: camera.get_view(), perspective: camera.get_perspective(),
 									u_light: light, diffuse_tex: &diffuse_texture, normal_tex: &normal_map },
 						&params).unwrap();
+			*/
 
 			target.draw(&shape,
 						glium::index::NoIndices(glium::index::PrimitiveType::TriangleStrip),
