@@ -1,9 +1,13 @@
 use std::sync::{Arc, Mutex, Once, ONCE_INIT};
 use std::mem;
+use std::thread;
 
 use rendermanager::RenderManager;
-use time;
-use std::thread;
+
+use common;
+
+use winit;
+use whi;
 
 #[derive(Clone)]
 pub struct Game {
@@ -17,7 +21,6 @@ pub struct Game {
 pub trait GInterface {
     fn create(&mut self);
     fn run(&mut self);
-
 }
 
 impl Game {
@@ -48,6 +51,35 @@ impl Game {
     }
 
     fn init(&mut self) {
+        self.init_window();
+
+        println!("render");
+        // self.init_render_enginer();
+    }
+
+    fn init_window(&mut self){
+
+        let mut win = whi::dxgi::window::init().unwrap();
+
+        // let (mut window, device, mut factory, main_color) = wb.unwrap();
+        for event in win.inner.wait_events() {
+            match event {
+                winit::Event::Closed => break,
+                _ => ()
+            }
+        }
+    }
+
+    fn init_render_enginer(&self){
+        // render create
+        let render_thread = thread::spawn(move || {
+            RenderManager::instance().start_up();
+        });
+
+        render_thread.join().unwrap();
+    }
+
+    fn create_command_objects(){
 
     }
 
@@ -61,7 +93,7 @@ impl Game {
 	}
 
     pub fn get_game_time() -> u64 {
-        time::precise_time_ns()
+        common::timer::current_time_ns()
     }
 }
 
@@ -70,12 +102,7 @@ impl GInterface for Game {
         // init window
         self.init();
 
-        // render create
-        let render_thread = thread::spawn(move || {
-            RenderManager::instance().start_up();
-        });
 
-        render_thread.join().unwrap();
     }
 
     fn run(&mut self) {
@@ -91,15 +118,12 @@ impl GInterface for Game {
         Game::render(elapsed_time);
 
         self.frame_count += 1;
-        if (Game::get_game_time() - self.frame_last_fps) >= 1000
-            {
-                self.frame_rate = self.frame_count;
-                self.frame_count = 0;
-                self.frame_last_fps = Game::get_game_time();
-            }
+        if (Game::get_game_time() - self.frame_last_fps) >= 1000 {
+            self.frame_rate = self.frame_count;
+            self.frame_count = 0;
+            self.frame_last_fps = Game::get_game_time();
+        }
     }
-
-
 }
 
 #[cfg(test)]
