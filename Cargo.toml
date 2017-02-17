@@ -12,6 +12,7 @@ readme = "README.md"
 repository = "https://github.com/whatever1992/Bzll"
 
 [dependencies]
+log = "*"
 winit = "0.5"
 glium = "*"
 image = "*"
@@ -24,8 +25,6 @@ num_cpus = "*"
 nom = "^2.1"
 cgmath = "0.9.1"
 genmesh = "0.4"
-dxguid = "*"
-winit = "*"
 
 obj = { version = "0.5", features = ["usegenmesh"] }
 flame = { version = "^0.1.9", optional = true }

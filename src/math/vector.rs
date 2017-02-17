@@ -1,5 +1,10 @@
 use std::ops::*;
 
+pub struct Vector<T>{
+
+}
+
+
 #[derive(Debug, PartialEq, Clone)]
 pub struct Vec2D
 {
