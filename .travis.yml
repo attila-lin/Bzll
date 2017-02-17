@@ -10,6 +10,6 @@ script:
   - cargo test --verbose
 
 os:
-  - linux
-  - osx
   - windows
+  # - linux
+  # - osx
