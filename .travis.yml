@@ -9,6 +9,10 @@ script:
   - if [ $TRAVIS_OS_NAME = osx ]; then cargo build --target x86_64-apple-ios --verbose; fi
   - cargo test --verbose
 
+matrix:
+  allow_failures:
+    - rust: nightly
+    
 os:
   - windows
   # - linux

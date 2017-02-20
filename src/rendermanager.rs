@@ -237,7 +237,7 @@ impl RMInterface for RenderManager {
 
 	}
 
-	// renderengine
+	// render engine
 	fn get_renderengine(&self) {
 
 	}

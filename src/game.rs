@@ -53,10 +53,9 @@ impl Game {
     fn init(&mut self) {
         self.init_window();
 
-        println!("render");
         // self.init_render_enginer();
     }
-
+    // TODO for different platform
     fn init_window(&mut self){
 
         let mut win = whi::dxgi::window::init().unwrap();
@@ -70,6 +69,7 @@ impl Game {
         }
     }
 
+    // TODO for different platform
     fn init_render_enginer(&self){
         // render create
         let render_thread = thread::spawn(move || {
@@ -99,12 +99,11 @@ impl Game {
 
 impl GInterface for Game {
     fn create(&mut self) {
-        // init window
+
         self.init();
-
-
     }
 
+    // main loop
     fn run(&mut self) {
         if self.last_frame_time == 0u64 {
             self.last_frame_time = Game::get_game_time();

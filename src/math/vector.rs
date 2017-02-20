@@ -1,9 +1,11 @@
 use std::ops::*;
 
+/*
+#[derive(PartialEq, Eq, Copy, Clone, Hash, Debug)]
 pub struct Vector<T>{
 
 }
-
+*/
 
 #[derive(Debug, PartialEq, Clone)]
 pub struct Vec2D

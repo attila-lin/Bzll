@@ -8,7 +8,7 @@ pub trait IWindow{
 
 pub struct Window {
     pub inner: winit::Window,
-    pub swap_chain: *mut winapi::IDXGISwapChain,
+    // pub swap_chain: *mut winapi::IDXGISwapChain,
 }
 
 #[derive(Copy, Clone, Debug)]
