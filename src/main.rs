@@ -10,12 +10,14 @@ extern crate winit;
 mod common;
 
 mod game;
-mod rendermanager;
+mod render;
 mod filesystem;
 mod resourcemanager;
 mod camera;
-mod math;
-mod scenemanager;
+mod math{
+    pub mod vector;
+}
+mod scene;
 mod rhi;
 mod whi{
     pub mod window;

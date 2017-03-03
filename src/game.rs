@@ -2,7 +2,7 @@ use std::sync::{Arc, Mutex, Once, ONCE_INIT};
 use std::mem;
 use std::thread;
 
-use rendermanager::RenderManager;
+use render::rendermanager::RenderManager;
 
 use common;
 

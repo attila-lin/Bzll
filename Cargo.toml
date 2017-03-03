@@ -25,7 +25,7 @@ num_cpus = "*"
 nom = "^2.1"
 cgmath = "0.9.1"
 genmesh = "0.4"
-toml = "0.3"
+#toml = "0.3"
 
 obj = { version = "0.5", features = ["usegenmesh"] }
 flame = { version = "^0.1.9", optional = true }
