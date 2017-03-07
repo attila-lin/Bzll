@@ -6,7 +6,7 @@ use image;
 use filesystem;
 use resourcemanager;
 use camera::Camera;
-use scenemanager::SceneManager;
+use scene::scenemanager::SceneManager;
 
 use std::io::Cursor;
 use std::sync::{Arc, Mutex, Once, ONCE_INIT};
@@ -111,22 +111,22 @@ impl RenderManager {
 		]).unwrap();
 
 
-		let image = image::load(Cursor::new(&include_bytes!("../test/tuto-14-diffuse.jpg")[..]),
+		let image = image::load(Cursor::new(&include_bytes!("../../test/tuto-14-diffuse.jpg")[..]),
 								image::JPEG).unwrap().to_rgba();
 		let image_dimensions = image.dimensions();
 		let image = glium::texture::RawImage2d::from_raw_rgba_reversed(image.into_raw(), image_dimensions);
 		let diffuse_texture = glium::texture::SrgbTexture2d::new(&display, image).unwrap();
 
-		let image = image::load(Cursor::new(&include_bytes!("../test/tuto-14-normal.png")[..]),
+		let image = image::load(Cursor::new(&include_bytes!("../../test/tuto-14-normal.png")[..]),
 								image::PNG).unwrap().to_rgba();
 		let image_dimensions = image.dimensions();
 		let image = glium::texture::RawImage2d::from_raw_rgba_reversed(image.into_raw(), image_dimensions);
 		let normal_map = glium::texture::Texture2d::new(&display, image).unwrap();
 
 
-		let vertex_shader_src = filesystem::open("./test/vertex_shader");
+		let vertex_shader_src = filesystem::open("../test/vertex_shader");
 		let vertex_shader_src_slice: &str = &vertex_shader_src;
-		let fragment_shader_src = filesystem::open("./test/fragment_shader");
+		let fragment_shader_src = filesystem::open("../test/fragment_shader");
 		let fragment_shader_src_slice: &str = &fragment_shader_src;
 
 		let program = glium::Program::from_source(&display, vertex_shader_src_slice, fragment_shader_src_slice,
@@ -186,7 +186,6 @@ impl RenderManager {
 
 			target.finish().unwrap();
 
-
 			thread::sleep(Duration::from_millis(*self.sleep_time.lock().unwrap()));
 
 			for ev in display.poll_events() {
@@ -195,8 +194,6 @@ impl RenderManager {
 					ev => self.process_input(&ev),
 				}
 			}
-
-
 		}
 	}
 
@@ -240,7 +237,7 @@ impl RMInterface for RenderManager {
 
 	}
 
-	// renderengine
+	// render engine
 	fn get_renderengine(&self) {
 
 	}
