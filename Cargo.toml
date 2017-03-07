@@ -25,6 +25,8 @@ num_cpus = "*"
 nom = "^2.1"
 cgmath = "0.9.1"
 genmesh = "0.4"
+gfx = "0.14"
+gfx_window_glutin = "*"
 #toml = "0.3"
 
 obj = { version = "0.5", features = ["usegenmesh"] }

@@ -6,9 +6,12 @@ extern crate lazy_static;
 extern crate log;
 extern crate winapi;
 extern crate winit;
+extern crate cgmath;
+extern crate gfx;
+extern crate gfx_window_glutin;
 
+mod config;
 mod common;
-
 mod game;
 mod render;
 mod filesystem;
@@ -26,10 +29,9 @@ mod whi{
 }
 
 fn main() {
-    use rhi::dx12::render;
-    println!("{}", render::hello());
-
     let mut app = game::Game::instance();
     app.create();
     app.run();
+
+    app.exit();
 }

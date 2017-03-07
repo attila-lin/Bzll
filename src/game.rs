@@ -8,6 +8,47 @@ use common;
 
 use winit;
 use whi;
+use gfx;
+use gfx_window_glutin;
+
+use gfx::traits::FactoryExt;
+use gfx::Device;
+
+// TODO move to config
+pub type ColorFormat = gfx::format::Rgba8;
+pub type DepthFormat = gfx::format::DepthStencil;
+
+gfx_defines!{
+    vertex Vertex {
+        position: [f32; 2] = "a_Position",
+    }
+
+    // color format: 0xRRGGBBAA
+    vertex Instance {
+        translate: [f32; 2] = "a_Translate",
+        color: u32 = "a_Color",
+    }
+
+    constant Locals {
+        scale: f32 = "u_Scale",
+    }
+
+    pipeline pipe {
+        vertex: gfx::VertexBuffer<Vertex> = (),
+        instance: gfx::InstanceBuffer<Instance> = (),
+        scale: gfx::Global<f32> = "u_Scale",
+        locals: gfx::ConstantBuffer<Locals> = "Locals",
+        out: gfx::RenderTarget<ColorFormat> = "Target0",
+    }
+}
+
+struct App<R: gfx::Resources> {
+    pso: gfx::PipelineState<R, pipe::Meta>,
+    data: pipe::Data<R>,
+    slice: gfx::Slice<R>,
+    upload: gfx::handle::Buffer<R, Instance>,
+    uploading: bool, // TODO: not needed if we have the encoder everywhere
+}
 
 #[derive(Clone)]
 pub struct Game {
@@ -18,10 +59,6 @@ pub struct Game {
 	frame_rate: i32,
 }
 
-pub trait GInterface {
-    fn create(&mut self);
-    fn run(&mut self);
-}
 
 impl Game {
     fn new() -> Self{
@@ -57,8 +94,13 @@ impl Game {
     }
     // TODO for different platform
     fn init_window(&mut self){
+        let mut wb = whi::dxgi::window::init().unwrap();
 
-        let mut win = whi::dxgi::window::init().unwrap();
+        let (window, mut device, mut factory, main_color, mut _main_depth) =
+            gfx_window_glutin::init::<ColorFormat, DepthFormat>(wb);
+        let mut app = App::new(&mut factory, main_color);
+
+        let mut encoder: gfx::Encoder<_, _> = factory.create_command_buffer().into();
 
         // let (mut window, device, mut factory, main_color) = wb.unwrap();
         for event in win.inner.wait_events() {
@@ -97,6 +139,13 @@ impl Game {
     }
 }
 
+
+pub trait GInterface {
+    fn create(&mut self);
+    fn run(&mut self);
+    fn exit(&mut self);
+}
+
 impl GInterface for Game {
     fn create(&mut self) {
 
@@ -122,6 +171,10 @@ impl GInterface for Game {
             self.frame_count = 0;
             self.frame_last_fps = Game::get_game_time();
         }
+    }
+
+    fn exit(&mut self){
+
     }
 }
 
