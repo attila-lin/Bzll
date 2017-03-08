@@ -211,7 +211,7 @@ impl Game {
         'main: loop {
             for event in window.poll_events() {
                 match event {
-                    winit::Event::Closed => break,
+                    winit::Event::Closed => break 'main,
                     _ => ()
                 }
             }
