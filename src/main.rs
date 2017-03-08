@@ -7,8 +7,11 @@ extern crate log;
 extern crate winapi;
 extern crate winit;
 extern crate cgmath;
-extern crate gfx;
-extern crate gfx_window_glutin;
+#[macro_use] extern crate gfx;
+#[macro_use] extern crate gfx_window_glutin;
+extern crate rustc_serialize;
+extern crate rand;
+extern crate glutin;
 
 mod config;
 mod common;
@@ -31,6 +34,7 @@ mod whi{
 fn main() {
     let mut app = game::Game::instance();
     app.create();
+
     app.run();
 
     app.exit();
