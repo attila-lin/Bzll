@@ -93,7 +93,9 @@ impl RenderSystem
 			_ => {},
 		}
 		self.on_render_begin();
-		*self.sleep_time.lock().unwrap() = (1000.0 / 60.0) as u64 - elapsed_time;
+
+		// *self.sleep_time.lock().unwrap() = (1000.0 / 60.0) as u64 - elapsed_time;
+
 		self.on_render_end();
 	}
 

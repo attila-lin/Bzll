@@ -46,11 +46,11 @@ impl Game {
     fn init_render_enginer(&mut self){
 
         // render create
-        let render_thread = thread::spawn(move || {
-            self.render_system.start_up();
-        });
-
-        render_thread.join().unwrap();
+//        let render_thread = thread::spawn(move || {
+//            self.render_system.start_up();
+//        });
+//
+//        render_thread.join().unwrap();
     }
 
     // TODO for different kinds of window
@@ -66,11 +66,11 @@ impl Game {
     }
 
     #[allow(dead_code)]
-    fn update(&self, elapsed_time:u64) {
+    fn update(&mut self, elapsed_time:u64) {
         elapsed_time;
 	}
 
-    fn render(&self, elapsed_time:u64) {
+    fn render(&mut self, elapsed_time:u64) {
         self.render_system.render(elapsed_time)
 	}
 

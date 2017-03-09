@@ -15,6 +15,7 @@ repository = "https://github.com/whatever1992/Bzll"
 render = { path = "src/render" }
 scene = { path = "src/scene" }
 audio = { path = "src/audio" }
+ai = { path = "src/ai" }
 
 log = "*"
 winit = "0.5"
