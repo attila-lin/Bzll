@@ -2,7 +2,7 @@ use std::sync::{Arc, Mutex, Once, ONCE_INIT};
 use std::mem;
 use std::thread;
 
-use render::rendermanager::RenderManager;
+use render::render_system::RenderSystem;
 
 use common;
 use glutin;
@@ -13,7 +13,6 @@ use gfx_window_glutin;
 
 use render::types::*;
 
-#[derive(Clone)]
 pub struct Game {
 	pub inner: Arc<Mutex<u8>>,
 	frame_last_fps: u64,
@@ -21,17 +20,17 @@ pub struct Game {
 	frame_count: i32,
 	frame_rate: i32,
     window: glutin::Window,
-    renderManager: RenderManager,
+    render_system: RenderSystem,
 }
 
 impl Game {
-    fn new() -> Self{
+    pub fn new() -> Self{
         let mut wb = whi::dxgi::window::init();
 
-        let (window, mut device, mut factory, main_color, mut _main_depth) =
+        let (window, mut device, mut factory, main_color, mut main_depth) =
             gfx_window_glutin::init::<ColorFormat, DepthFormat>(wb);
 
-        let renderManager = RenderManager::new(device, factory, main_color);
+        let render_system = RenderSystem::new(device, factory, main_color, main_depth);
 
         Game {
             inner: Arc::new(Mutex::new(0)),
@@ -39,8 +38,8 @@ impl Game {
             last_frame_time: 0u64,
             frame_count: 0,
             frame_rate: 0,
-            window:window,
-            renderManager:renderManager,
+            window: window,
+            render_system: render_system,
         }
     }
 
@@ -48,14 +47,10 @@ impl Game {
 
         // render create
         let render_thread = thread::spawn(move || {
-            self.renderManager.start_up();
+            self.render_system.start_up();
         });
 
         render_thread.join().unwrap();
-    }
-
-    fn init(&mut self) {
-
     }
 
     // TODO for different kinds of window
@@ -71,24 +66,19 @@ impl Game {
     }
 
     #[allow(dead_code)]
-    fn update(elapsed_time:u64) {
+    fn update(&self, elapsed_time:u64) {
         elapsed_time;
 	}
 
-    fn render(elapsed_time:u64) {
-        RenderManager::instance().render(elapsed_time)
+    fn render(&self, elapsed_time:u64) {
+        self.render_system.render(elapsed_time)
 	}
 
     pub fn get_game_time() -> u64 {
         common::timer::current_time_ns()
     }
 
-
-    fn create(&mut self) {
-        self.init();
-    }
-
-    fn run(&mut self) {
+    pub fn run(&mut self) {
         'main: loop {
             for event in self.window.poll_events() {
                 match event {
@@ -105,8 +95,8 @@ impl Game {
             let elapsed_time = frame_time - self.last_frame_time;
             self.last_frame_time = frame_time;
 
-            Game::update(elapsed_time);
-            Game::render(elapsed_time);
+            self.update(elapsed_time);
+            self.render(elapsed_time);
 
             self.frame_count += 1;
             if (Game::get_game_time() - self.frame_last_fps) >= 1000 {
@@ -117,7 +107,7 @@ impl Game {
         }
     }
 
-    fn exit(&mut self){
+    pub fn exit(&mut self){
         // tell thread to exit
 
     }

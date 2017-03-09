@@ -1,9 +1,6 @@
-use std::sync::{Arc, Mutex, Once, ONCE_INIT};
-use std::mem;
+use std::sync::{Arc, Mutex};
 
-use camera::Camera;
-
-use glium::glutin;
+use render::camera::Camera;
 
 #[derive(Clone,Debug)]
 pub struct SceneManager {
@@ -37,9 +34,9 @@ impl SceneManager{
         (self.cameras.lock().unwrap())[0].update()
     }
 
-    fn process_input(&self, event: &glutin::Event) {
-        (self.cameras.lock().unwrap())[0].process_input(event)
-    }
+//    fn process_input(&self, event: &glutin::Event) {
+//        (self.cameras.lock().unwrap())[0].process_input(event)
+//    }
 }
 
 #[cfg(test)]

@@ -13,13 +13,13 @@ repository = "https://github.com/whatever1992/Bzll"
 
 [dependencies]
 render = { path = "src/render" }
+scene = { path = "src/scene" }
 audio = { path = "src/audio" }
 
 log = "*"
 winit = "0.5"
 glium = "*"
 num = "*"
-rand = "*"
 lazy_static = "*"
 time = "*"
 hwloc = "0.4.0"
@@ -28,6 +28,7 @@ nom = "^2.1"
 cgmath = "0.9.1"
 genmesh = "0.4"
 gfx = "0.14"
+gfx_window_glutin = "*"
 #toml = "0.3"
 rustc-serialize = "0.3.22"
 glutin = "0.7"

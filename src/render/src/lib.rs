@@ -4,10 +4,13 @@ extern crate gfx_core;
 extern crate gfx_device_gl;
 extern crate gfx_window_glutin;
 extern crate glutin;
+extern crate image;
+extern crate rand;
 
 pub mod types;
+pub mod render_system;
+pub mod camera;
 //pub mod material;
-pub mod rendermanager;
 //pub mod sphere;
 //pub mod texture;
 

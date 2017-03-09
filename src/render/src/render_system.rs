@@ -1,59 +1,50 @@
 // send command to renderengine
-use image;
 use gfx;
-
 use glutin;
-use super::types::*;
 
-use filesystem;
-use resourcemanager;
+use types::*;
+
 use camera::Camera;
-use scene::scenemanager::SceneManager;
 
 use std::io::Cursor;
 use std::sync::{Arc, Mutex, Once, ONCE_INIT};
 use std::{mem, thread};
 use std::time::Duration;
 
-pub enum RenderManagerState{
+pub enum RenderSystemState{
 	UnInited,
 	Inited,
 	Exited,
 }
 
-pub struct RenderManager{
+pub struct RenderSystem{
 	// Since we will be used in many threads, we need to protect
 	// concurrent access
 	pub inner: Arc<Mutex<u8>>,
 	pub sleep_time: Arc<Mutex<u64>>,
-	pub state: Arc<Mutex<RenderManagerState>>,
+	pub state: Arc<Mutex<RenderSystemState>>,
 	device: Device,
 	factory: Factory,
 	encoder: Encoder,
-	output_color: ColorFormat,
+	output_color: OutputColor,
 	output_depth: OutputDepth,
-	scene_manager: SceneManager,
 }
 
 
-impl RenderManager
+impl RenderSystem
 {
-	fn new(device:Device, factory: Factory, main_color: OutputColor, ) -> Self {
+	pub fn new(device:Device, mut factory: Factory, main_color: OutputColor, main_depth: OutputDepth ) -> Self {
 		let encoder = factory.create_command_buffer().into();
 
-		let scene_manager = SceneManager::new();
-		scene_manager.init();
-
-		RenderManager {
+		RenderSystem {
 			inner: Arc::new(Mutex::new(0)),
 			sleep_time: Arc::new(Mutex::new(0u64)),
-			state: Arc::new(Mutex::new(RenderManagerState::Inited)),
+			state: Arc::new(Mutex::new(RenderSystemState::Inited)),
 			device: device,
 			factory: factory,
 			encoder: encoder,
 			output_color: main_color,
-			output_depth: OutputDepth,
-			scene_manager: scene_manager,
+			output_depth: main_depth,
 		}
 	}
 
@@ -78,15 +69,15 @@ impl RenderManager
 	}
 
 	fn process_input(&mut self, event: &glutin::Event) {
-		self.scene_manager.process_input(event);
+		// self.scene_system.process_input(event);
 	}
 
-	fn start_up(&mut self) {
+	pub fn start_up(&mut self) {
 		self.main_loop();
 	}
 
 	fn shout_down(&mut self) {
-		*self.state.lock().unwrap() = RenderManagerState::Exited;
+		*self.state.lock().unwrap() = RenderSystemState::Exited;
 		return;
 	}
 
@@ -96,9 +87,9 @@ impl RenderManager
 		self.on_update_end();
 	}
 
-	fn render(&mut self, elapsed_time:u64) {
+	pub fn render(&mut self, elapsed_time:u64) {
 		match *self.state.lock().unwrap() {
-			RenderManagerState::Exited => return,
+			RenderSystemState::Exited => return,
 			_ => {},
 		}
 		self.on_render_begin();
