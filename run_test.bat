@@ -1,5 +1,6 @@
 cargo test -- --nocapture
 
-cargo count --separator , --unsafe-statistics
+cd src
+cargo count --separator --unsafe-statistics
 
 pause

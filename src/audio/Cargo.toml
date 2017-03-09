@@ -1,0 +1,6 @@
+[package]
+name = "audio"
+version = "0.1.0"
+authors = ["Yiyu Lin <linyiyu1992@gmail.com>"]
+
+[dependencies]

@@ -12,10 +12,12 @@ readme = "README.md"
 repository = "https://github.com/whatever1992/Bzll"
 
 [dependencies]
+render = { path = "src/render" }
+audio = { path = "src/audio" }
+
 log = "*"
 winit = "0.5"
 glium = "*"
-image = "*"
 num = "*"
 rand = "*"
 lazy_static = "*"
@@ -26,10 +28,10 @@ nom = "^2.1"
 cgmath = "0.9.1"
 genmesh = "0.4"
 gfx = "0.14"
-gfx_window_glutin = "*"
 #toml = "0.3"
 rustc-serialize = "0.3.22"
 glutin = "0.7"
+
 
 obj = { version = "0.5", features = ["usegenmesh"] }
 flame = { version = "^0.1.9", optional = true }
