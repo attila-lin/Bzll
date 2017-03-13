@@ -19,13 +19,13 @@ extern crate toml;
 
 extern crate render;
 extern crate scene;
+extern crate resource;
 
 mod config;
 mod common;
 mod game;
 
 mod filesystem;
-mod resourcemanager;
 mod math{
     pub mod vector;
 }

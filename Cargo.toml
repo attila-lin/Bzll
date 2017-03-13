@@ -13,6 +13,7 @@ repository = "https://github.com/whatever1992/Bzll"
 
 [dependencies]
 render = { path = "src/render" }
+resource = { path = "src/resource" }
 scene = { path = "src/scene" }
 audio = { path = "src/audio" }
 ai = { path = "src/ai" }
@@ -27,15 +28,12 @@ hwloc = "0.4.0"
 num_cpus = "*"
 nom = "^2.1"
 cgmath = "0.9.1"
-genmesh = "0.4"
 gfx = "0.14"
 gfx_window_glutin = "*"
 toml = "0.2"
 rustc-serialize = "0.3.22"
 glutin = "0.7"
 
-
-obj = { version = "0.5", features = ["usegenmesh"] }
 flame = { version = "^0.1.9", optional = true }
 flamer = { version = "^0.1.2", optional = true }
 

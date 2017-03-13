@@ -4,9 +4,6 @@
 // Responsibilities of the Runtime Resource Manage
 // The Resource Registry
 
-extern crate genmesh;
-extern crate obj;
-
 use std::io::prelude::*;
 use std::fs::File;
 use std::path::Path;
