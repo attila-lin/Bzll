@@ -12,6 +12,11 @@ extern crate gfx_window_glutin;
 extern crate rustc_serialize;
 extern crate glutin;
 
+#[macro_use]
+//extern crate serde_derive;
+extern crate toml;
+
+
 extern crate render;
 extern crate scene;
 
@@ -29,7 +34,8 @@ mod whi;
 
 
 fn main() {
-    let mut app = game::Game::new();
+    let config = config::Config::get_config();
+    let mut app = game::Game::new(config);
 
     app.run();
 

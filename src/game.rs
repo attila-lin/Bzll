@@ -12,6 +12,7 @@ use gfx;
 use gfx_window_glutin;
 
 use render::types::*;
+use config;
 
 pub struct Game {
 	pub inner: Arc<Mutex<u8>>,
@@ -24,7 +25,7 @@ pub struct Game {
 }
 
 impl Game {
-    pub fn new() -> Self{
+    pub fn new(config: config::Config) -> Self{
         let mut wb = whi::dxgi::window::init();
 
         let (window, mut device, mut factory, main_color, mut main_depth) =
