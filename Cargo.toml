@@ -18,6 +18,7 @@ scene = { path = "src/scene" }
 audio = { path = "src/audio" }
 ai = { path = "src/ai" }
 
+#serde_derive = "0.9"
 log = "*"
 winit = "0.5"
 glium = "*"

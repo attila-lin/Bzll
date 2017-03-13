@@ -12,10 +12,9 @@ extern crate gfx_window_glutin;
 extern crate rustc_serialize;
 extern crate glutin;
 
-#[macro_use]
+//#[macro_use]
 //extern crate serde_derive;
 extern crate toml;
-
 
 extern crate render;
 extern crate scene;
