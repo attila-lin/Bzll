@@ -1,6 +1,6 @@
 extern crate rand;
 
-use glium::glutin;
+use glutin;
 
 #[derive(Clone,Debug)]
 pub struct Camera {

@@ -12,24 +12,29 @@ readme = "README.md"
 repository = "https://github.com/whatever1992/Bzll"
 
 [dependencies]
+render = { path = "src/render" }
+resource = { path = "src/resource" }
+scene = { path = "src/scene" }
+audio = { path = "src/audio" }
+ai = { path = "src/ai" }
+
+#serde_derive = "0.9"
 log = "*"
 winit = "0.5"
 glium = "*"
-image = "*"
 num = "*"
-rand = "*"
 lazy_static = "*"
 time = "*"
 hwloc = "0.4.0"
 num_cpus = "*"
 nom = "^2.1"
 cgmath = "0.9.1"
-genmesh = "0.4"
 gfx = "0.14"
 gfx_window_glutin = "*"
-#toml = "0.3"
+toml = "0.2"
+rustc-serialize = "0.3.22"
+glutin = "0.7"
 
-obj = { version = "0.5", features = ["usegenmesh"] }
 flame = { version = "^0.1.9", optional = true }
 flamer = { version = "^0.1.2", optional = true }
 
@@ -48,3 +53,56 @@ default = []
 flame_it = ["flame", "flamer"]
 
 [dev-dependencies]
+
+
+# The development profile, used for `cargo build`.
+[profile.dev]
+opt-level = 0      # controls the `--opt-level` the compiler builds with
+debug = true       # controls whether the compiler passes `-C debuginfo`
+                   # a value of `true` is equivalent to `2`
+rpath = false      # controls whether the compiler passes `-C rpath`
+lto = false        # controls `-C lto` for binaries and staticlibs
+debug-assertions = true # controls whether debug assertions are enabled
+codegen-units = 1  # controls whether the compiler passes `-C codegen-units`
+                   # `codegen-units` is ignored when `lto = true`
+panic = 'unwind'   # panic strategy (`-C panic=...`), can also be 'abort'
+
+# The release profile, used for `cargo build --release`.
+[profile.release]
+opt-level = 3
+debug = false
+rpath = false
+lto = false
+debug-assertions = false
+codegen-units = 1
+panic = 'unwind'
+
+# The testing profile, used for `cargo test`.
+[profile.test]
+opt-level = 0
+debug = true
+rpath = false
+lto = false
+debug-assertions = true
+codegen-units = 1
+panic = 'unwind'
+
+# The benchmarking profile, used for `cargo bench`.
+[profile.bench]
+opt-level = 3
+debug = false
+rpath = false
+lto = false
+debug-assertions = false
+codegen-units = 1
+panic = 'unwind'
+
+# The documentation profile, used for `cargo doc`.
+[profile.doc]
+opt-level = 0
+debug = true
+rpath = false
+lto = false
+debug-assertions = true
+codegen-units = 1
+panic = 'unwind'

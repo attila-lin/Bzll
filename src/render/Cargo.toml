@@ -1,0 +1,13 @@
+[package]
+name = "render"
+version = "0.1.0"
+authors = ["Yiyu Lin <linyiyu1992@gmail.com>"]
+
+[dependencies]
+gfx = "0.14"
+gfx_core = "0.6"
+gfx_device_gl = "0.13"
+gfx_window_glutin = "*"
+glutin = "*"
+image = "*"
+rand = "*"

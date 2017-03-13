@@ -1,0 +1,31 @@
+# TODO make a template
+# TODO Change to feature
+
+[app]
+name = "game"
+version = "0.1.0"
+
+[window]
+window_title = "hahahha"
+window_height = 768
+window_width = 1280
+
+[render]
+
+
+[resource]
+icon = "artist/icon"
+object = "artist/object"
+shader = "artist/shader"
+
+[physical]
+
+
+[ai]
+
+
+[audio]
+
+
+[build]
+

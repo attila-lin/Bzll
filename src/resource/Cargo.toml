@@ -1,0 +1,8 @@
+[package]
+name = "resource"
+version = "0.1.0"
+authors = ["Yiyu Lin <linyiyu1992@gmail.com>"]
+
+[dependencies]
+genmesh = "0.4"
+obj = { version = "0.5", features = ["usegenmesh"] }

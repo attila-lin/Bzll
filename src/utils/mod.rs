@@ -1,1 +1,1 @@
-pub mod pathconfig;
+pub mod path_config;
