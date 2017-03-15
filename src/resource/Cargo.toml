@@ -5,4 +5,5 @@ authors = ["Yiyu Lin <linyiyu1992@gmail.com>"]
 
 [dependencies]
 genmesh = "0.4"
+fnv = "1.0"
 obj = { version = "0.5", features = ["usegenmesh"] }

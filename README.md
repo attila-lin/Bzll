@@ -9,7 +9,7 @@ in progress! Modern, fast, cross-platform and elegent game engine.
 
 
 ## License
-MIT
+Copyright (c) 2017, Lin Yiyu (MIT License).
 
 ## Contributing
-No. Thanks.
+Not Now. Thanks.

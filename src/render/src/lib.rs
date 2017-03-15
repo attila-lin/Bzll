@@ -6,6 +6,7 @@ extern crate gfx_window_glutin;
 extern crate glutin;
 extern crate image;
 extern crate rand;
+extern crate fnv;
 
 pub mod types;
 pub mod render_system;

@@ -2,7 +2,6 @@
 extern crate time;
 extern crate lazy_static;
 extern crate log;
-extern crate winapi;
 extern crate winit;
 extern crate cgmath;
 
@@ -11,6 +10,8 @@ extern crate gfx;
 extern crate gfx_window_glutin;
 extern crate rustc_serialize;
 extern crate glutin;
+extern crate fnv;
+extern crate specs;
 
 //#[macro_use]
 //extern crate serde_derive;
@@ -23,6 +24,7 @@ extern crate resource;
 mod config;
 mod common;
 mod game;
+//mod event;
 
 mod filesystem;
 mod math{

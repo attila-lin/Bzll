@@ -3,6 +3,7 @@ use std::mem;
 use std::thread;
 
 use render::render_system::RenderSystem;
+use resource::resource_system::ResourcSystem;
 
 use common;
 use glutin;
@@ -32,6 +33,9 @@ impl Game {
             gfx_window_glutin::init::<ColorFormat, DepthFormat>(wb);
 
         let render_system = RenderSystem::new(device, factory, main_color, main_depth);
+
+        let rescource_system = ResourcSystem::new();
+//        let (ev_send, ev_recv) = event::SenderHub::new();
 
         Game {
             inner: Arc::new(Mutex::new(0)),
@@ -83,7 +87,7 @@ impl Game {
         'main: loop {
             for event in self.window.poll_events() {
                 match event {
-                    winit::Event::Closed => break 'main,
+                    glutin::Event::Closed => break 'main,
                     _ => ()
                 }
             }
