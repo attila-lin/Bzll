@@ -4,6 +4,7 @@
 [app]
 name = "game"
 version = "0.1.0"
+fps = 60
 
 [window]
 window_title = "hahahha"

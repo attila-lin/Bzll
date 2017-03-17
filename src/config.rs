@@ -29,6 +29,10 @@ pub struct WinConfig {
 // TODO graph config
 //
 
+
+
+// TODO default Config
+
 impl Config {
     pub fn get_config() -> Self
     {
