@@ -41,8 +41,8 @@ pub trait State {
                      _assets: &mut AssetManager,
                      _pipe: &mut Pipeline)
                      -> Trans {
-        Trans::None
-    }
+                            Trans::None
+                        }
 
     /// Executed repeatedly at stable, predictable intervals (1/60th of a second
     /// by default).
@@ -51,8 +51,8 @@ pub trait State {
                     _assets: &mut AssetManager,
                     _pipe: &mut Pipeline)
                     -> Trans {
-        Trans::None
-    }
+            Trans::None
+        }
 
     /// Executed on every frame immediately, as fast as the engine will allow.
     fn update(&mut self,

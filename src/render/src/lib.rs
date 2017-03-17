@@ -11,6 +11,7 @@ extern crate fnv;
 pub mod types;
 pub mod render_system;
 pub mod camera;
+pub mod pipeline;
 //pub mod material;
 //pub mod sphere;
 //pub mod texture;

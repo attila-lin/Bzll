@@ -26,7 +26,7 @@ pub struct FrameTime {
 	frame_rate: i32,
     delta_time: Duration,
     fixed_step: Duration,
-    state: State,
+    
 }
 
 impl FrameTime{
@@ -49,6 +49,8 @@ pub struct Game {
     render_system: RenderSystem,
     resource_system: ResourcSystem,
     planner: Planner<()>,
+    pipe: Pipeline;
+    state: State,
 }
 
 impl Game {
@@ -56,8 +58,10 @@ impl Game {
         let mut wb = whi::dxgi::window::init();
 
         let mut world = World::new();
-        // TODO 4 -> num of core
-        let mut planner = Planner::new(world, 4);
+
+        use num_cpus;
+        let num = num_cpus::get();
+        let mut planner = Planner::new(world, num);
 
         let (window, mut device, mut factory, main_color, mut main_depth) =
             gfx_window_glutin::init::<ColorFormat, DepthFormat>(wb);
@@ -94,6 +98,10 @@ impl Game {
     }
 
     pub fn run(&mut self) {
+        let world = &mut self.planner.mut_world();
+        let resource_system = &mut self.resource_system;
+        let pipe = &mut self.pipe;
+        self.states.start(world, resource_system, pipe);
 
         while self.states.is_running() {
             self.timer.restart();
@@ -106,7 +114,7 @@ impl Game {
     fn advance_frame(&mut self) {
         for event in self.window.poll_events() {
             match event {
-                glutin::Event::Closed => self.states.,
+                glutin::Event::Closed => self.states.S ,
                 _ => ()
             }
         }
