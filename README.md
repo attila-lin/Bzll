@@ -14,6 +14,9 @@ in progress! Modern, fast, cross-platform and elegent game engine.
 
 ### Tools
 
+## Documentation
+Documentation is planned, but currently unavailable (sorry!). 
+
 ## Example
 
 ## License
