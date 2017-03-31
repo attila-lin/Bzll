@@ -8,12 +8,43 @@ use std::io::prelude::*;
 use std::fs::File;
 use std::path::Path;
 use std::error::Error;
+use std::any::{Any, TypeId};
 
+use fnv::FnvHashMap as HashMap;
 
-// pub fn load(_type: str, _buffer: str)
-// {
+pub struct Assets {
+    loaders: HashMap<TypeId, Box<Any>>,
+//    asset_ids: HashMap<String, AssetId>,
+//    assets: World,
+}
 
-// }
+impl Assets {
+    fn new() -> Assets {
+        Assets {
+            loaders: HashMap::default(),
+        }
+    }
+}
+
+pub struct ResourcSystem{
+    assets: Assets,
+}
+
+impl ResourcSystem {
+    pub fn new() -> Self{
+        ResourcSystem{
+            assets: Assets::new(),
+        }
+    }
+}
+
+fn load_file(name: &str) -> Vec<u8> {
+    let mut file = File::open(name).unwrap();
+    let mut buffer = vec![];
+    file.read_to_end(&mut buffer).unwrap();
+
+    buffer
+}
 
 // http://www.opengl-tutorial.org/beginners-tutorials/tutorial-7-model-loading/
 pub fn load_obj(p: &str){

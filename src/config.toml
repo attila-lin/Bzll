@@ -4,14 +4,19 @@
 [app]
 name = "game"
 version = "0.1.0"
+fps = 60
 
 [window]
 window_title = "hahahha"
 window_height = 768
 window_width = 1280
+fullscreen = false
+#vertical synchronization
+vsync = true
+
 
 [render]
-
+AA = "MSAA" #
 
 [resource]
 icon = "artist/icon"
