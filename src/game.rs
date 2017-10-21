@@ -8,15 +8,20 @@ use resource::resource_system::ResourcSystem;
 use common;
 use glutin;
 use whi;
-use gfx;
-use gfx_window_glutin;
 use state;
 use specs::*;
 
-use render::types::*;
+// use render::types::*;
 use config;
 
 use common::timer::*;
+
+
+
+
+
+// mod frame;
+// mod triangle_draw_system;
 
 use std::time::{Duration, Instant};
 pub struct FrameTime {
@@ -26,7 +31,6 @@ pub struct FrameTime {
 	frame_rate: i32,
     delta_time: Duration,
     fixed_step: Duration,
-    
 }
 
 impl FrameTime{
@@ -49,7 +53,7 @@ pub struct Game {
     render_system: RenderSystem,
     resource_system: ResourcSystem,
     planner: Planner<()>,
-    pipe: Pipeline;
+    // pipe: Pipeline;
     state: State,
 }
 

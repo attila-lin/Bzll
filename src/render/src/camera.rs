@@ -1,6 +1,6 @@
 extern crate rand;
 
-use glutin;
+use winit::{self, ControlFlow, Event, WindowEvent};
 
 #[derive(Clone,Debug)]
 pub struct Camera {
@@ -174,54 +174,60 @@ impl Camera {
 		}
 	}
 
-	pub fn process_input(&mut self, event: &glutin::Event)
+	pub fn process_input(&mut self, event: winit::Event)
 	{
 		// 主线程才能修改
 		match event {
-			&glutin::Event::KeyboardInput(glutin::ElementState::Pressed, _, Some(glutin::VirtualKeyCode::Space)) => {
-				self.moving_up = true;
-			},
-			&glutin::Event::KeyboardInput(glutin::ElementState::Released, _, Some(glutin::VirtualKeyCode::Space)) => {
-				self.moving_up = false;
-			},
-			&glutin::Event::KeyboardInput(glutin::ElementState::Pressed, _, Some(glutin::VirtualKeyCode::Down)) => {
-				self.moving_down = true;
-			},
-			&glutin::Event::KeyboardInput(glutin::ElementState::Released, _, Some(glutin::VirtualKeyCode::Down)) => {
-				self.moving_down = false;
-			},
-			&glutin::Event::KeyboardInput(glutin::ElementState::Pressed, _, Some(glutin::VirtualKeyCode::A)) => {
-				self.moving_left = true;
-			},
-			&glutin::Event::KeyboardInput(glutin::ElementState::Released, _, Some(glutin::VirtualKeyCode::A)) => {
-				self.moving_left = false;
-			},
-			&glutin::Event::KeyboardInput(glutin::ElementState::Pressed, _, Some(glutin::VirtualKeyCode::D)) => {
-				self.moving_right = true;
-			},
-			&glutin::Event::KeyboardInput(glutin::ElementState::Released, _, Some(glutin::VirtualKeyCode::D)) => {
-				self.moving_right = false;
-			},
-			&glutin::Event::KeyboardInput(glutin::ElementState::Pressed, _, Some(glutin::VirtualKeyCode::W)) => {
-				self.moving_forward = true;
-			},
-			&glutin::Event::KeyboardInput(glutin::ElementState::Released, _, Some(glutin::VirtualKeyCode::W)) => {
-				self.moving_forward = false;
-			},
-			&glutin::Event::KeyboardInput(glutin::ElementState::Pressed, _, Some(glutin::VirtualKeyCode::S)) => {
-				self.moving_backward = true;
-			},
-			&glutin::Event::KeyboardInput(glutin::ElementState::Released, _, Some(glutin::VirtualKeyCode::S)) => {
-				self.moving_backward = false;
-			},
-			&glutin::Event::MouseWheel(d, _) => match d {
-				glutin::MouseScrollDelta::LineDelta(_, s) | glutin::MouseScrollDelta::PixelDelta(_, s) => {
-					if s > 0.0 {
-						self.moving_forward_once = true;
-					} else if s < 0.0 {
-						self.moving_backward_once = true;
+			Event::WindowEvent { event, .. } => {
+                match event {
+					// &WindowEvent::KeyboardInput(winit::ElementState::Pressed, _, Some(winit::VirtualKeyCode::Space)) => {
+					// 	self.moving_up = true;
+					// },
+					// &winit::Event::KeyboardInput(winit::ElementState::Released, _, Some(winit::VirtualKeyCode::Space)) => {
+					// 	self.moving_up = false;
+					// },
+					// &winit::Event::KeyboardInput(winit::ElementState::Pressed, _, Some(winit::VirtualKeyCode::Down)) => {
+					// 	self.moving_down = true;
+					// },
+					// &winit::Event::KeyboardInput(winit::ElementState::Released, _, Some(winit::VirtualKeyCode::Down)) => {
+					// 	self.moving_down = false;
+					// },
+					// &winit::Event::KeyboardInput(winit::ElementState::Pressed, _, Some(winit::VirtualKeyCode::A)) => {
+					// 	self.moving_left = true;
+					// },
+					// &winit::Event::KeyboardInput(winit::ElementState::Released, _, Some(winit::VirtualKeyCode::A)) => {
+					// 	self.moving_left = false;
+					// },
+					// &winit::Event::KeyboardInput(winit::ElementState::Pressed, _, Some(winit::VirtualKeyCode::D)) => {
+					// 	self.moving_right = true;
+					// },
+					// &winit::Event::KeyboardInput(winit::ElementState::Released, _, Some(winit::VirtualKeyCode::D)) => {
+					// 	self.moving_right = false;
+					// },
+					// &winit::Event::KeyboardInput(winit::ElementState::Pressed, _, Some(winit::VirtualKeyCode::W)) => {
+					// 	self.moving_forward = true;
+					// },
+					// &winit::Event::KeyboardInput(winit::ElementState::Released, _, Some(winit::VirtualKeyCode::W)) => {
+					// 	self.moving_forward = false;
+					// },
+					// &winit::Event::KeyboardInput(winit::ElementState::Pressed, _, Some(winit::VirtualKeyCode::S)) => {
+					// 	self.moving_backward = true;
+					// },
+					WindowEvent::KeyboardInput {
+                        input: winit::KeyboardInput { virtual_keycode: Some(winit::VirtualKeyCode::Escape), .. }, ..
+                    } => {
+						self.moving_backward = false;
 					}
-
+					_ => ()
+					// &winit::Event::MouseWheel(d, _) => match d {
+					// 	winit::MouseScrollDelta::LineDelta(_, s) | winit::MouseScrollDelta::PixelDelta(_, s) => {
+					// 		if s > 0.0 {
+					// 			self.moving_forward_once = true;
+					// 		} else if s < 0.0 {
+					// 			self.moving_backward_once = true;
+					// 		}
+					// 	}
+					// }
 				}
 			},
 			_ => {}
