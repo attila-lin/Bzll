@@ -1,0 +1,1 @@
+https://docs.rs/rayon/0.8.2/rayon/

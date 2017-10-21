@@ -1,0 +1,1 @@
+make asset packed like asset_00, asset_01 
